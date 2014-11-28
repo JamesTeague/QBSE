@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<script src="https://cdn.firebase.com/js/client/1.1.1/firebase.js"></script>
+	<script type="text/javascript" src="scripts/sessvars.js"></script>
+	<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
+	<!-- <script type="text/javascript" src="scripts/underscore-min.js"></script> -->
+	<script type="text/javascript" src="scripts/sessionModule.js"></script>
+	<script type="text/javascript" src="scripts/signon.js"></script>
+		<title>
+			Sign-On Test
+		</title>
+	</head>
+	<body>
+		<h1>Login With Username and Password:</h1>
+		<br/>
+		<div id="signInErr"></div>
+		<br/>
+		Email:
+		<input type="email" id="email">
+		<br/>
+		Password:
+		<input type="password" id="password">
+		<br/>
+		<input type="submit" onclick="login()">
+		<br/>
+		<h1>Login With Facebook:</h1>
+		<br/>
+		<div id="fbErr"></div>
+		<br/>
+		<input type="button" value="facebook" onclick="thirdPartyLogin('facebook')">
+		<br/>
+		<h1>Login With Google:</h1>
+		<br/>
+		<div id="googErr"></div>
+		<br/>
+		<input type="button" value="google" onclick="thirdPartyLogin('google')">
+		<hr/>
+		<div id="divSignUp">
+			<h1>Sign Up:</h1>
+			<br/>
+			<div id="divErr"></div>
+			Email:
+			<input type="email" id="userEmail">
+			<br/>
+			Password:
+			<input type="password" id="userPass">
+			Verify Password:
+			<input type="password" id="verifyPass">
+			<br/>
+			<input type="submit" value="Create User" onclick="createUser()">
+		</div>
+	</body>
+</html>

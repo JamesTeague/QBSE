@@ -1,0 +1,9 @@
+{
+  "firebase": "qb-stock-exchange",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    ".*",
+    "**/node_modules/**"
+  ]
+}

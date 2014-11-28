@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdn.firebase.com/js/client/1.1.1/firebase.js"></script>
+		<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="scripts/sessvars.js"></script>
+		<!-- <script type="text/javascript" src="scripts/underscore-min.js"></script> -->
+		<script type="text/javascript" src="scripts/sessionModule.js"></script>
+		<script type="text/javascript" src="scripts/signon.js"></script>
+		<title>
+			My Account
+		</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+		$(function(){
+			$("#email").text(sessvars.sessionObj.email);
+		});
+		</script>
+		<div id="accountInfo">
+			<h1>My Account</h1>
+			<div id="email"></div>
+			<input type="submit" value="Delete Account" onclick="deleteUser(sessvars.sessionObj.email);">
+			<input type="submit" value="Logout" onclick="logout()">
+			<div></div>
+			<div></div>
+		</div>
+	</body>
+</html>
