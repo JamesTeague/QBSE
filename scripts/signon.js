@@ -2,16 +2,21 @@
  * signon.js
  * @file Handles all of the sign-procedures and authentications.
  * Will read and write to the database (Firebase) when needed.
+ * @requires sessvars
+ * @requires sessionModule
+ * @requires alertify
  * @author James Teague II jtteague13@gmail.com
  * @since 10/13/2014
  */
-
+/*jslint white: true */
+/*jslint browser: true */
+/*global alertify, sessvars, Firebase, SessionModule*/
 /*List of variables*/
 var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
 var userRef = null;
-var email = null;
-var pword = null;
-var verify = null;
+// var email = null;
+// var pword = null;
+// var verify = null;
 /**
  * @enum {string}
  * @description Enumeration of all possible errors with authentication.
@@ -56,28 +61,32 @@ var ProviderEnum = Object.freeze({
  * @description Authenticate user with Email and Password.
  * @return none
  * @author James Teague II
+ * @since 10/13/2014
  */
 function login() {
-	email = $("#email").val();
-	pword = $("#password").val();
+	// email = $("#email").val();
+	// pword = $("#password").val();
 	//authenticate user with firebase.
 	ref.authWithPassword({
-		email    : email,
-		password : pword
+		email    : $("#email").val(),
+		password : $("#password").val()
 	}, function(error, authData) {
 		if(error){
 			switch (error.code){
 				case ErrorEnum.INVALID_PASSWORD:
-					$("#signInErr").text("Password is incorrect.");
-					setTimeout(function(){$("#signInErr").text("")},5000);
+					// $("#signInErr").text("Password is incorrect.");
+					// setTimeout(function(){$("#signInErr").text("")},5000);
+					alertify.error("Password is incorrect.");
 					break;
 				case ErrorEnum.INVALID_USER:
-					$("#signInErr").text(error.message);
-					setTimeout(function(){$("#signInErr").text("")},5000);
+					// $("#signInErr").text(error.message);
+					// setTimeout(function(){$("#signInErr").text("")},5000);
+					alertify.error(error.message);
 					break;
 				case ErrorEnum.INVALID_EMAIL:
-					$("#signInErr").text("Not a valid format of email address.");
-					setTimeout(function(){$("#signInErr").text("")},5000);
+					// $("#signInErr").text("Not a valid format of email address.");
+					// setTimeout(function(){$("#signInErr").text("")},5000);
+					alertify.error("Not a valid format of email address.");
 					break;
 			}
 		}
@@ -99,7 +108,7 @@ function autoLogin(email, pword) {
 		password : pword
 	}, function(error, authData) {
 		if(error){
-			console.log(error.code, error.message)
+			console.log(error.code, error.message);
 		}
 	});
 }
@@ -114,43 +123,21 @@ function autoLogin(email, pword) {
 function thirdPartyLogin(provider){
 	ref.authWithOAuthPopup(provider, function(error, authData) {
 		if(error){
-			switch(error){
+			switch(error.code){
 				case ErrorEnum.USER_CANCELLED:
-					if(provider === ProviderEnum.FACEBOOK){
-						$("#fbErr").text("User cancelled action");
-						setTimeout(function(){$("#fbErr").text("")},5000);
-						break;	
-					}
-					if(provider === ProviderEnum.GOOGLE){
-						$("#googErr").text("User cancelled action");
-						setTimeout(function(){$("#googErr").text("")},5000);
-						break;
-					}
+					alertify.log("User cancelled action.");
+					break;
 				case ErrorEnum.INVALID_PASSWORD:
-					if(provider === ProviderEnum.FACEBOOK){
-						$("#fbErr").text("Password is incorrect.");
-						setTimeout(function(){$("#fbErr").text("")},5000);
-						break;	
-					}
-					if(provider === ProviderEnum.GOOGLE){
-						$("#googErr").text("Password is incorrect.");
-						setTimeout(function(){$("#googErr").text("")},5000);
-						break;
-					}
+					alertify.error("Password is incorrect.");
+					break;
 				case ErrorEnum.PROVIDER_ERROR:
-					if(provider === ProviderEnum.FACEBOOK){
-						$("#fbErr").text(error.message);
-						setTimeout(function(){$("#fbErr").text("")},5000);
-						break;	
-					}
-					if(provider === ProviderEnum.GOOGLE){
-						$("#googErr").text(error.message);
-						setTimeout(function(){$("#googErr").text("")},5000);
-						break;
-					}
+					alertify.error(error.message);
+					break;
 				case ErrorEnum.NETWORK_ERROR:
-
-				break;
+					alertify.error(error.message);
+					break;
+				default:
+					alertify.alert(error.code + ": Please contact webmaster");
 			}
 		}
 	}, {scope: "email"}); //the permissions requested
@@ -164,45 +151,44 @@ function thirdPartyLogin(provider){
  */
 function createUser() {
 	//Grab user input from input boxes on page
-	email = $("#userEmail").val();
-	pword = $("#userPass").val();
-	verify = $("#verifyPass").val();
+	// email = $("#userEmail").val();
+	var pword = $("#userPass").val();
+	var verify = $("#verifyPass").val();
 	//verify that the passwords match
 	if(pword === verify){
 		//create the user using Firebase
 		ref.createUser({
-			email    : email,
+			email    : $("#userEmail").val(),
 			password : pword
 		}, function(error) {
 			if(error){
 				switch (error.code){
 					case ErrorEnum.INVALID_EMAIL:
-						$("#divErr").text("The specified email address is not valid.");
-						setTimeout(function(){$("#divErr").text("")},5000);
+						alertify.error("The specified email address is not valid.");
 						break;
 					case ErrorEnum.EMAIL_TAKEN:
-						$("#divErr").text(error.message);
-						setTimeout(function(){$("#divErr").text("")},5000);
+						alertify.error(error.message);
 						break;
 					default:
-						$("#divErr").text(error.code+": "+ "Please contact webmaster.");
+						alertify.alert(error.code+": Please contact webmaster.");
 				}
 			} else {
 				$("#userEmail").attr("disabled","disabled");
 				$("#userPass").attr("disabled","disabled");
 				$("#verifyPass").attr("disabled","disabled");
-				$("#divErr").text("You have successfully created an account! \
+				alertify.success("You have successfully created an account! \
 					Please log in using your new credentials.");
 			}
 		});
 	}
 	else{
-		$("#divErr").text("Passwords do not match.");
+		alertify.error("Passwords do not match.");
 	}
 }
 /**
  * @function insertNewUser
- * @description Inserts a new user into database with the alotted $1000
+ * @description inserts a new user into database with the alotted $20,000
+ * and the user's access level
  * @param  {Object} user authData
  * @return none
  * @author James Teague II
@@ -211,7 +197,7 @@ function createUser() {
 function insertNewUser(user) {
 	var userRef = ref.child('users').child(user.uid);
 	userRef.child('purse').set(20000);
-	userRef.child('level').update(0);
+	userRef.child('level').set(0);
 	if(user.provider === ProviderEnum.EMAIL){
 		userRef.update({"email": user.password.email});
 	}
@@ -228,11 +214,13 @@ function insertNewUser(user) {
 		}
 	});
 }
+
 /**
  * @function deleteUser
  * @description Deletes user node from the database 
  * and calls deleteAccount.
  * @see deleteAccount
+ * @see logout
  * @param  {String} email User's email to be deleted.
  * @return none
  * @author James Teague II
@@ -241,26 +229,33 @@ function insertNewUser(user) {
 function deleteUser(email) {
 	var authData = ref.getAuth();
 	if(authData.provider === ProviderEnum.EMAIL) {
-		var p = prompt("If you enter your password, this will delete all of your progress even in the event of an error.",
-	 	"Enter your password.");
-		ref.child('users').child(authData.uid).once("value", function(snapshot) {
-			sessvars.tempData = snapshot.val();
-			ref.child('users').child(authData.uid).remove(deleteAccount(email, p));
-		});
+		// var p = prompt("Warning! This will remove all progress made on this account.",
+	 // 	"Enter your password.");
+	 	alertify.prompt("Warning! This will remove all progress made on this account.", function(e, str){
+			if(e){
+				ref.child('users').child(authData.uid).once("value", function(snapshot) {
+					sessvars.tempData = snapshot.val();
+					ref.child('users').child(authData.uid).remove(deleteAccount(email, str));
+				});
+			}
+		}, "Enter your password");
+		
 	}
 	else if(authData.provider === ProviderEnum.FACEBOOK || authData.provider === ProviderEnum.GOOGLE) {
-		var sure = confirm("Are you sure you want to remove Stock Account?")
-		if(sure){
-			ref.child('users').child(authData.uid).remove(function(error){
-				if(error){
-					alert("There was an error. Please try again or contact webmaster.", error.code);
-				}
-				else{
-					alert("You have been removed.")
-					logout();
-				}
-			});
-		}
+		// var sure = confirm("Are you sure you want to remove Stock Account?")
+		alertify.confirm("Are you sure you want to remove your Stock Account?", function(e){
+			if(e){
+				ref.child('users').child(authData.uid).remove(function(error){
+					if(error){
+						alertify.alert("There was an error. Please try again or contact webmaster.", error.code);
+					}
+					else{
+						alertify.alert("You have been removed.");
+						logout();
+					}
+				});
+			}
+		});
 	}
 	
 }
@@ -270,6 +265,7 @@ function deleteUser(email) {
  * @param  {String} email user's email
  * @param  {String} pass  user's password
  * @return none
+ * @see logout
  * @author James Teague II
  * @since 11/4/2014
  */
@@ -281,16 +277,16 @@ function deleteAccount(email, pass) {
 		if(error){
 			switch(error.code){
 	  			case ErrorEnum.INVALID_PASSWORD:
-	  				alert("Password was invalid. Account not deleted.");
+	  				alertify.alert("Password was invalid. Your account was not deleted.");
 	  				restoreLostData(email, pass);
 	  				break;
 	  			default:
-	  				alert("OOPS! There was an error on our end! Please try again later or contact the webmaster.", error.code);
+	  				alertify.alert("OOPS! There was an error on our end! Please try again later or contact the webmaster.", error.code);
 	  				restoreLostData(email, pass);
 	  				break;
   			}
 		} else {
-			alert("User Account Deleted.");
+			alertify.alert("User Account Deleted.");
 			logout();
 		}
 	});
@@ -303,6 +299,8 @@ function deleteAccount(email, pass) {
  * @param  {String} email user email
  * @param  {String} pword user password
  * @return none
+ * @see autoLogin
+ * @see module:SessionModule#pruneTemporary
  * @author James Teague II
  * @since 11/6/2014
  */
@@ -318,41 +316,99 @@ function restoreLostData(email, pass) {
 		});
 	}
 }
+/**
+ * @function forgotPassword
+ * @description Sends user an email with temporary password
+ * @return none
+ * @author James Teague II
+ * @since 12/12/2014
+ */
 function forgotPassword() {
-	firebaseRef.resetPassword({
-  		email : $("#userEmail").val();
+	ref.resetPassword({
+  		email : $("#email").val()
 	}, function(err) {
 		  if (err) {
 		    switch (err.code) {
 		      case ErrorEnum.INVALID_USER:
-		        $("#signInErr").text(err.message);
-		      case default:
-				$("#signInErr").text(err.code+": "+ "Please contact webmaster.");
+		        alertify.error(err.message);
+		        break;
+		   	  case ErrorEnum.INVALID_EMAIL:
+		   	  	alertify.error(err.message);
+		   	  	break;
+		      default:
+				alertify.alert(err.code+": "+ "Please contact webmaster.");
 		    }
 		  } else {
-		    alert("Password Reset Email sent.");
+		    alertify.alert("Password Reset Email sent.");
 		  }
 	});
 }
-function resetPassword(email) {
+/**
+ * @function getOldPassword
+ * @description Prompts user for old/current password
+ * then calls function to get the new password
+ * @return none
+ * @see getNewPassword
+ * @author James Teague II
+ * @since 12/14/2014
+ */
+function getOldPassword() {
+	alertify.prompt("Enter Password", function(e, str){
+		if(e){
+			getNewPassword(str);
+		}
+	}, "Temporary Password");
+}
+
+/**
+ * @function getNewPassword
+ * @description Prompts user for new password
+ * then calls function to change password
+ * @param {String} oldPass the users old/current password
+ * @return none
+ * @see resetPassword
+ * @author James Teague II
+ * @since 12/14/2014
+ */
+function getNewPassword(oldPass) {
+	alertify.prompt("Enter New Password", function(e, str){
+		if(e){
+			resetPassword(sessvars.sessionObj.email, oldPass, str);
+		}
+	}, "New Password");
+}
+/**
+ * @function resetPassword
+ * @description Changes the password associated with the account
+ * @param {String} email email tied to account to change password
+ * @param {String} op old/current password
+ * @param {String} np new password
+ * @return none
+ * @author James Teague II
+ * @since 12/14/2014
+ */
+function resetPassword(email, op, np) {
 	ref.changePassword({
-  		email       : email,
-  		oldPassword : "correcthorsebatterystaple",
-  		newPassword : "neatsupersecurenewpassword"
+		email       : email,
+		oldPassword : op,
+		newPassword : np
 	}, function(error) {
-  		if (error === null) {
-    		console.log("Password changed successfully");
+  		if (error) {
+  			alertify.error("Error changing password: "+ error.message);
   		} else {
-    		console.log("Error changing password:", error);
+    		alertify.success("Password changed successfully!");
   		}
 	});
 }
+
 /**
  * @function logout
  * @description Cleans session object, logs out user from application, and
  * sends user back to login page.
  * @see module:SessionModule#destroySession
  * @return none
+ * @author James Teague II
+ * @since 10/13/2014
  */
 function logout() {
 	SessionModule.destroySession(sessvars);
@@ -366,11 +422,21 @@ function logout() {
  * have a node a session object is made. Once session object
  * is created the page is redirected.
  * @see insertNewUser
+ * @see getOldPassword
+ * @see module:SessionModule#freeze
  * @param  {Object} authData authentication object from firebase
  * @return none
+ * @author James Teague II
+ * @since 12/14/2014
+ * @todo Look at check for beenRedirected. Maybe check for missing
+ * "index.html" instead of page 
  */
 var handleLogon = function (authData) {
 	var go = false;
+	var beenRedirected = false;
+	if(window.location.href.indexOf("myaccount.html") > -1){
+		beenRedirected = true;
+	}
 	if (authData) {
 		//keep this from being run again
 		ref.offAuth(handleLogon);
@@ -382,13 +448,17 @@ var handleLogon = function (authData) {
 				insertNewUser(authData);
 			}
 			else{
+				if(authData.provider === ProviderEnum.EMAIL && authData.password.isTemporaryPassword){
+					alertify.alert("You have logged in with temporary password and you must change it.");
+					getOldPassword(authData.password.email);
+				}
 				//if there is not session object
 				if(!sessvars.sessionObj){
 					//allow for page redirection
 					go = true;
 					sessvars.sessionObj = Object.freeze(snapshot.exportVal());
 				}
-				if(go){
+				if(go || (sessvars.sessionObj && authData && !beenRedirected)){
 					go = false;
 					window.location.href = "https://qb-stock-exchange.firebaseapp.com/myaccount.html";
 				}
@@ -398,11 +468,11 @@ var handleLogon = function (authData) {
 			}
 		});
   	}
-}
+};
 /**
  * @event onAuth
  * @description Event listener for a change in authentication.
- * @param  {function} Function that runs code you want to do on the event
+ * @param  {function} Function that runs code desired to be done on the event
  * @return none
  * @author James Teague II
  * @since 10/13/2014

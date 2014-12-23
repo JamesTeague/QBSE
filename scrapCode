@@ -272,3 +272,49 @@ var sessvars=(function(){
 	x.$.init();
 	return x;
 })();
+
+//USABLE CODE
+for(ndx in nflQBs){
+	nflQBs[ndx][1] = scrubText(nflQBs[ndx][1]);
+	nflQBs[ndx][9] = scrubText(nflQBs[ndx][9]);
+	nflQBs[ndx][6] = findWLD(nflQBs[ndx][6]);
+}
+function findWLD(rec){
+	var arrRec = rec.split("-");
+	var wld = arrRec[0] - arrRec[1];
+	return wld;
+}
+function scrubText(text){
+	return text.replace(/\+|\*|\%/g,'');
+}
+/*
+ * 0 Rk,
+ * 1 name,
+ * 2 Tm,
+ * 3 Age,
+ * 4 G,
+ * 5 GS,
+ * 6 QBrec,
+ * 7 Cmp,
+ * 8 Att,
+ * 9 Cmp%,
+ * 10 Yds,
+ * 11 TD,
+ * 12 TD%,
+ * 13 Int,
+ * 14 Int%,
+ * 15 Lng,
+ * 16 Y/A,
+ * 17 AY/A,
+ * 18 Y/C,
+ * 19 Y/G,
+ * 20 Rate,
+ * 21 QBR,
+ * 22 Sk,
+ * 23 Yds,
+ * 24 NY/A,
+ * 25 ANY/A,
+ * 26 Sk%,
+ * 27 4QC,
+ * 28 GWD
+ */

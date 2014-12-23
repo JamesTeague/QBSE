@@ -1,0 +1,9 @@
+body {
+	margin-top: 50px;
+}
+.navbar-inner{
+	padding-right: 25px;
+}
+.dropdown-menu {
+	width: 300px;
+}
