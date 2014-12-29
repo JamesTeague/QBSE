@@ -157,7 +157,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line21">line 21</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line23">line 23</a>
     </li></ul></dd>
     
 
@@ -226,7 +226,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line40">line 40</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -306,7 +306,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line48">line 48</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line50">line 50</a>
     </li></ul></dd>
     
 
@@ -394,7 +394,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line138">line 138</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line167">line 167</a>
     </li></ul></dd>
     
 
@@ -567,12 +567,19 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line240">line 240</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line286">line 286</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="global.html#logout">logout</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -718,7 +725,7 @@ and calls deleteAccount.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line224">line 224</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line242">line 242</a>
     </li></ul></dd>
     
 
@@ -729,6 +736,564 @@ and calls deleteAccount.
     <dd class="tag-see">
         <ul>
             <li><a href="global.html#deleteAccount">deleteAccount</a></li>
+        
+            <li><a href="global.html#logout">logout</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    none
+</div>
+
+
+
+        
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="forgotPassword"><span class="type-signature"></span>forgotPassword<span class="signature">()</span><span class="type-signature"></span></h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sends user an email with temporary password
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>12/12/2014</dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>James Teague II</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line343">line 343</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    none
+</div>
+
+
+
+        
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="getFile"><span class="type-signature"></span>getFile<span class="signature">(filename, type)</span><span class="type-signature"></span></h4>
+
+        
+        <p class="summary">Gets a File's data for parsing.</p>
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Takes in filename and type for an ajax
+call that will get the file and retrieve the data. 
+On a success, the data is passed to another function
+for parsing. It has a default value of "qb.txt" and
+"text" if nothing is passed in to be parsed.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filename</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">name of file to be parsed</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">type of file</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>12/13/2014</dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>James Teague II</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="csv2.js.html">csv2.js</a>, <a href="csv2.js.html#line16">line 16</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>parseCSV</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    none
+</div>
+
+
+
+        
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="getNewPassword"><span class="type-signature"></span>getNewPassword<span class="signature">(oldPass)</span><span class="type-signature"></span></h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Prompts user for new password
+then calls function to change password
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>oldPass</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the users old/current password</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>12/14/2014</dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>James Teague II</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line387">line 387</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="global.html#resetPassword">resetPassword</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    none
+</div>
+
+
+
+        
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="getOldPassword"><span class="type-signature"></span>getOldPassword<span class="signature">()</span><span class="type-signature"></span></h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Prompts user for old/current password
+then calls function to get the new password
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>12/14/2014</dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>James Teague II</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line370">line 370</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="global.html#getNewPassword">getNewPassword</a></li>
         </ul>
     </dd>
     
@@ -846,7 +1411,8 @@ is created the page is redirected.
     
 
     
-
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>12/14/2014</dd>
     
 
     
@@ -857,6 +1423,15 @@ is created the page is redirected.
 
     
 
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>James Teague II</li>
+        </ul>
+    </dd>
     
 
     
@@ -868,7 +1443,7 @@ is created the page is redirected.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line294">line 294</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line442">line 442</a>
     </li></ul></dd>
     
 
@@ -879,10 +1454,22 @@ is created the page is redirected.
     <dd class="tag-see">
         <ul>
             <li><a href="global.html#insertNewUser">insertNewUser</a></li>
+        
+            <li><a href="global.html#getOldPassword">getOldPassword</a></li>
+        
+            <li>module:SessionModule#freeze</li>
         </ul>
     </dd>
     
 
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Look at check for beenRedirected. Maybe check for missing
+"index.html" instead of page</li>
+        </ul>
+    </dd>
     
 </dl>
 
@@ -925,7 +1512,8 @@ is created the page is redirected.
 
     
     <div class="description">
-        Inserts a new user into database with the alotted $1000
+        inserts a new user into database with the alotted $20,000
+and the user's access level
     </div>
     
 
@@ -1025,7 +1613,7 @@ is created the page is redirected.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line190">line 190</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line210">line 210</a>
     </li></ul></dd>
     
 
@@ -1095,6 +1683,9 @@ is created the page is redirected.
     
 
     
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>10/13/2014</dd>
+    
 
     
 
@@ -1124,7 +1715,7 @@ is created the page is redirected.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line54">line 54</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line56">line 56</a>
     </li></ul></dd>
     
 
@@ -1195,7 +1786,8 @@ sends user back to login page.
     
 
     
-
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>10/13/2014</dd>
     
 
     
@@ -1206,6 +1798,15 @@ sends user back to login page.
 
     
 
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>James Teague II</li>
+        </ul>
+    </dd>
     
 
     
@@ -1217,7 +1818,7 @@ sends user back to login page.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line282">line 282</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line428">line 428</a>
     </li></ul></dd>
     
 
@@ -1230,6 +1831,202 @@ sends user back to login page.
             <li>module:SessionModule#destroySession</li>
         </ul>
     </dd>
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    none
+</div>
+
+
+
+        
+
+    
+</dd>
+
+        
+            
+<dt>
+    
+        <h4 class="name" id="resetPassword"><span class="type-signature"></span>resetPassword<span class="signature">(email, op, np)</span><span class="type-signature"></span></h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Changes the password associated with the account
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">email tied to account to change password</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>op</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">old/current password</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>np</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">new password</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>12/14/2014</dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>James Teague II</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line404">line 404</a>
+    </li></ul></dd>
+    
+
+    
+
     
 
     
@@ -1374,7 +2171,7 @@ sends user back to login page.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line86">line 86</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line137">line 137</a>
     </li></ul></dd>
     
 
@@ -1484,7 +2281,7 @@ sends user back to login page.
 
             
 
-            <td class="description last">that runs code you want to do on the event</td>
+            <td class="description last">that runs code desired to be done on the event</td>
         </tr>
 
     
@@ -1532,7 +2329,7 @@ sends user back to login page.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line336">line 336</a>
+        <a href="signon.js.html">signon.js</a>, <a href="signon.js.html#line496">line 496</a>
     </li></ul></dd>
     
 
@@ -1581,13 +2378,13 @@ sends user back to login page.
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-SessionModule.html">SessionModule</a></li><li><a href="module-sessvars.html">sessvars</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:onAuth">onAuth</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteAccount">deleteAccount</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#ErrorEnum">ErrorEnum</a></li><li><a href="global.html#handleLogon">handleLogon</a></li><li><a href="global.html#insertNewUser">insertNewUser</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#NULL">NULL</a></li><li><a href="global.html#ProviderEnum">ProviderEnum</a></li><li><a href="global.html#thirdPartyLogin">thirdPartyLogin</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-SessionModule.html">SessionModule</a></li><li><a href="module-sessvars.html">sessvars</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:onAuth">onAuth</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteAccount">deleteAccount</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#ErrorEnum">ErrorEnum</a></li><li><a href="global.html#forgotPassword">forgotPassword</a></li><li><a href="global.html#getFile">getFile</a></li><li><a href="global.html#getNewPassword">getNewPassword</a></li><li><a href="global.html#getOldPassword">getOldPassword</a></li><li><a href="global.html#handleLogon">handleLogon</a></li><li><a href="global.html#insertNewUser">insertNewUser</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#NULL">NULL</a></li><li><a href="global.html#ProviderEnum">ProviderEnum</a></li><li><a href="global.html#resetPassword">resetPassword</a></li><li><a href="global.html#thirdPartyLogin">thirdPartyLogin</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha10</a> on Wed Nov 05 2014 20:42:37 GMT-0600 (CST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha10</a> on Mon Dec 29 2014 10:09:03 GMT-0600 (CST)
 </footer>
 
 <script> prettyPrint(); </script>

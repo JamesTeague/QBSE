@@ -14,9 +14,6 @@
 /*List of variables*/
 var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
 var userRef = null;
-// var email = null;
-// var pword = null;
-// var verify = null;
 /**
  * @enum {string}
  * @description Enumeration of all possible errors with authentication.
@@ -64,8 +61,10 @@ var ProviderEnum = Object.freeze({
  * @since 10/13/2014
  */
 function login() {
-	// email = $("#email").val();
-	// pword = $("#password").val();
+	var isMobile = false;
+	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+ 		isMobile = true;
+	}
 	//authenticate user with firebase.
 	ref.authWithPassword({
 		email    : $("#email").val(),
@@ -76,17 +75,40 @@ function login() {
 				case ErrorEnum.INVALID_PASSWORD:
 					// $("#signInErr").text("Password is incorrect.");
 					// setTimeout(function(){$("#signInErr").text("")},5000);
-					alertify.error("Password is incorrect.");
+					if(isMobile){
+						var scrollY = window.pageYOffset;
+						alertify.error("Password is incorrect.");
+						$(".alertify-logs").css("top", scrollY+"px");
+					}
+					else{
+						alertify.error("Password is incorrect.");
+					}
 					break;
 				case ErrorEnum.INVALID_USER:
 					// $("#signInErr").text(error.message);
 					// setTimeout(function(){$("#signInErr").text("")},5000);
-					alertify.error(error.message);
+					
+					if(isMobile){
+						var scrollY = window.pageYOffset;
+						alertify.error(error.message);
+						$(".alertify-logs").css("top", scrollY+"px");
+					}
+					else{
+						alertify.error(error.message);
+					}
 					break;
 				case ErrorEnum.INVALID_EMAIL:
 					// $("#signInErr").text("Not a valid format of email address.");
 					// setTimeout(function(){$("#signInErr").text("")},5000);
-					alertify.error("Not a valid format of email address.");
+					//window.scrollTo(0,1);
+					if(isMobile){
+						var scrollY = window.pageYOffset;
+						alertify.error("Not a valid format of email address.");
+						$(".alertify-logs").css("top", scrollY+"px");
+					}
+					else{
+						alertify.error("Not a valid format of email address.");
+					}
 					break;
 			}
 		}
@@ -203,9 +225,11 @@ function insertNewUser(user) {
 	}
 	else if(user.provider === ProviderEnum.FACEBOOK){
 		userRef.update({"email": user.facebook.email});
+		//.displayName
 	}
 	else if(user.provider === ProviderEnum.GOOGLE){
 		userRef.update({"email": user.google.email});
+		//.displayName
 	}
 	userRef.once('value', function(snapshot){
 		if(snapshot.val()){
