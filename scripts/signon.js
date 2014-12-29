@@ -492,6 +492,10 @@ var handleLogon = function (authData) {
 			}
 		});
   	}
+  	//if user session timed out and there is no authData but there is a lingering session, clear it
+  	else if (!authData && sessvars.sessionObj){
+  		SessionModule.destroySession(sessvars);
+  	}
 };
 /**
  * @event onAuth
