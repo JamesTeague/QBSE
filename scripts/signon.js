@@ -125,7 +125,7 @@ function autoLogin(email, pword, name) {
 			console.log(error.code, error.message);
 		}
 		else{
-			//TODO: Get name in database
+			insertNewUser(authData, name);
 		}
 	});
 }
@@ -211,20 +211,22 @@ function createUser() {
  * @author James Teague II
  * @since 10/13/2014
  */
-function insertNewUser(user) {
+function insertNewUser(user, ename) {
+	var name = ename || "";
 	var userRef = ref.child('users').child(user.uid);
 	userRef.child('purse').set(20000);
 	userRef.child('level').set(0);
 	if(user.provider === ProviderEnum.EMAIL){
 		userRef.update({"email": user.password.email});
+		userRef.update({"name": name});
 	}
 	else if(user.provider === ProviderEnum.FACEBOOK){
 		userRef.update({"email": user.facebook.email});
-		//.displayName
+		userRef.update({"name": user.facebook.displayName});
 	}
 	else if(user.provider === ProviderEnum.GOOGLE){
 		userRef.update({"email": user.google.email});
-		//.displayName
+		userRef.update({"name": user.google.displayName});
 	}
 	userRef.once('value', function(snapshot){
 		if(snapshot.val()){
