@@ -73,8 +73,6 @@ function login() {
 		if(error){
 			switch (error.code){
 				case ErrorEnum.INVALID_PASSWORD:
-					// $("#signInErr").text("Password is incorrect.");
-					// setTimeout(function(){$("#signInErr").text("")},5000);
 					if(isMobile){
 						var scrollY = window.pageYOffset;
 						alertify.error("Password is incorrect.");
@@ -85,9 +83,6 @@ function login() {
 					}
 					break;
 				case ErrorEnum.INVALID_USER:
-					// $("#signInErr").text(error.message);
-					// setTimeout(function(){$("#signInErr").text("")},5000);
-					
 					if(isMobile){
 						var scrollY = window.pageYOffset;
 						alertify.error(error.message);
@@ -98,9 +93,6 @@ function login() {
 					}
 					break;
 				case ErrorEnum.INVALID_EMAIL:
-					// $("#signInErr").text("Not a valid format of email address.");
-					// setTimeout(function(){$("#signInErr").text("")},5000);
-					//window.scrollTo(0,1);
 					if(isMobile){
 						var scrollY = window.pageYOffset;
 						alertify.error("Not a valid format of email address.");
@@ -124,13 +116,16 @@ function login() {
  * @author James Teague II
  * @since 11/6/2014
  */
-function autoLogin(email, pword) {
+function autoLogin(email, pword, name) {
 	ref.authWithPassword({
 		email    : email,
 		password : pword
 	}, function(error, authData) {
 		if(error){
 			console.log(error.code, error.message);
+		}
+		else{
+			insertNewUser(authData, name);
 		}
 	});
 }
@@ -173,14 +168,20 @@ function thirdPartyLogin(provider){
  */
 function createUser() {
 	//Grab user input from input boxes on page
-	// email = $("#userEmail").val();
-	var pword = $("#userPass").val();
-	var verify = $("#verifyPass").val();
+	var name = $("#name").val();
+	var emailAddr = $("#addr").val(); 
+	var pword = $("#pword").val();
+	var verify = $("#verify").val();
+	if (name === "" || !name){
+		alertify.error("Please fill out the required field.");
+		$("#name").focus();
+		return;
+	}
 	//verify that the passwords match
 	if(pword === verify){
 		//create the user using Firebase
 		ref.createUser({
-			email    : $("#userEmail").val(),
+			email    : emailAddr,
 			password : pword
 		}, function(error) {
 			if(error){
@@ -195,11 +196,12 @@ function createUser() {
 						alertify.alert(error.code+": Please contact webmaster.");
 				}
 			} else {
-				$("#userEmail").attr("disabled","disabled");
-				$("#userPass").attr("disabled","disabled");
-				$("#verifyPass").attr("disabled","disabled");
-				alertify.success("You have successfully created an account! \
-					Please log in using your new credentials.");
+				// $("#email").attr("disabled","disabled");
+				// $("#userPass").attr("disabled","disabled");
+				// $("#verifyPass").attr("disabled","disabled");
+				// alertify.success("You have successfully created an account! \
+				// 	Please log in using your new credentials.");
+				autoLogin(emailAddr, pword, name);
 			}
 		});
 	}
@@ -216,20 +218,22 @@ function createUser() {
  * @author James Teague II
  * @since 10/13/2014
  */
-function insertNewUser(user) {
+function insertNewUser(user, ename) {
+	var name = ename || "";
 	var userRef = ref.child('users').child(user.uid);
 	userRef.child('purse').set(20000);
 	userRef.child('level').set(0);
 	if(user.provider === ProviderEnum.EMAIL){
 		userRef.update({"email": user.password.email});
+		userRef.update({"name": name});
 	}
 	else if(user.provider === ProviderEnum.FACEBOOK){
 		userRef.update({"email": user.facebook.email});
-		//.displayName
+		userRef.update({"name": user.facebook.displayName});
 	}
 	else if(user.provider === ProviderEnum.GOOGLE){
 		userRef.update({"email": user.google.email});
-		//.displayName
+		userRef.update({"name": user.google.displayName});
 	}
 	userRef.once('value', function(snapshot){
 		if(snapshot.val()){
@@ -253,8 +257,6 @@ function insertNewUser(user) {
 function deleteUser(email) {
 	var authData = ref.getAuth();
 	if(authData.provider === ProviderEnum.EMAIL) {
-		// var p = prompt("Warning! This will remove all progress made on this account.",
-	 // 	"Enter your password.");
 	 	alertify.prompt("Warning! This will remove all progress made on this account.", function(e, str){
 			if(e){
 				ref.child('users').child(authData.uid).once("value", function(snapshot) {
@@ -263,10 +265,8 @@ function deleteUser(email) {
 				});
 			}
 		}, "Enter your password");
-		
 	}
 	else if(authData.provider === ProviderEnum.FACEBOOK || authData.provider === ProviderEnum.GOOGLE) {
-		// var sure = confirm("Are you sure you want to remove Stock Account?")
 		alertify.confirm("Are you sure you want to remove your Stock Account?", function(e){
 			if(e){
 				ref.child('users').child(authData.uid).remove(function(error){
@@ -491,6 +491,10 @@ var handleLogon = function (authData) {
 				}
 			}
 		});
+  	}
+  	//if user session timed out and there is no authData but there is a lingering session, clear it
+  	else if (!authData && sessvars.sessionObj){
+  		SessionModule.destroySession(sessvars);
   	}
 };
 /**
