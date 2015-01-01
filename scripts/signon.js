@@ -168,13 +168,20 @@ function thirdPartyLogin(provider){
  */
 function createUser() {
 	//Grab user input from input boxes on page
+	var name = $("#name").val();
+	var emailAddr = $("#addr").val(); 
 	var pword = $("#pword").val();
 	var verify = $("#verify").val();
+	if (name === "" || !name){
+		alertify.error("Please fill out the required field.");
+		$("#name").focus();
+		return;
+	}
 	//verify that the passwords match
 	if(pword === verify){
 		//create the user using Firebase
 		ref.createUser({
-			email    : $("#addr").val(),
+			email    : emailAddr,
 			password : pword
 		}, function(error) {
 			if(error){
@@ -194,7 +201,7 @@ function createUser() {
 				// $("#verifyPass").attr("disabled","disabled");
 				// alertify.success("You have successfully created an account! \
 				// 	Please log in using your new credentials.");
-				autoLogin($("#addr").val(), pword, $("#name").val());
+				autoLogin(emailAddr, pword, name);
 			}
 		});
 	}
