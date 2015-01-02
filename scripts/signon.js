@@ -50,7 +50,8 @@ var ErrorEnum = Object.freeze({
 var ProviderEnum = Object.freeze({
 	FACEBOOK: "facebook",
 	GOOGLE: "google",
-	EMAIL: "password"
+	EMAIL: "password",
+	TWITTER: "twitter"
 });
 
 /**
@@ -196,11 +197,6 @@ function createUser() {
 						alertify.alert(error.code+": Please contact webmaster.");
 				}
 			} else {
-				// $("#email").attr("disabled","disabled");
-				// $("#userPass").attr("disabled","disabled");
-				// $("#verifyPass").attr("disabled","disabled");
-				// alertify.success("You have successfully created an account! \
-				// 	Please log in using your new credentials.");
 				autoLogin(emailAddr, pword, name);
 			}
 		});
@@ -235,6 +231,10 @@ function insertNewUser(user, ename) {
 		userRef.update({"email": user.google.email});
 		userRef.update({"name": user.google.displayName});
 	}
+	else if(user.provider === ProviderEnum.TWITTER){
+		userRef.update({"email": user.twitter.username});
+		userRef.update({"name": user.twitter.displayName});
+	}
 	userRef.once('value', function(snapshot){
 		if(snapshot.val()){
 			sessvars.sessionObj = Object.freeze(snapshot.exportVal());
@@ -266,8 +266,8 @@ function deleteUser(email) {
 			}
 		}, "Enter your password");
 	}
-	else if(authData.provider === ProviderEnum.FACEBOOK || authData.provider === ProviderEnum.GOOGLE) {
-		alertify.confirm("Are you sure you want to remove your Stock Account?", function(e){
+	else if(authData.provider === ProviderEnum.FACEBOOK || authData.provider === ProviderEnum.GOOGLE || authData.provider === ProviderEnum.TWITTER) {
+		alertify.confirm("Are you sure you want to remove your Stock Account? \r\n This will NOT delete your "+ authData.provider + " account.", function(e){
 			if(e){
 				ref.child('users').child(authData.uid).remove(function(error){
 					if(error){
