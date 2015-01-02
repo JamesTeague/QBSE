@@ -281,7 +281,6 @@ function deleteUser(email) {
 			}
 		});
 	}
-	
 }
 /**
  * @function deleteAccount
@@ -302,11 +301,11 @@ function deleteAccount(email, pass) {
 			switch(error.code){
 	  			case ErrorEnum.INVALID_PASSWORD:
 	  				alertify.alert("Password was invalid. Your account was not deleted.");
-	  				restoreLostData(email, pass);
+	  				restoreLostData(ref.getAuth());
 	  				break;
 	  			default:
 	  				alertify.alert("OOPS! There was an error on our end! Please try again later or contact the webmaster.", error.code);
-	  				restoreLostData(email, pass);
+	  				restoreLostData(ref.getAuth());
 	  				break;
   			}
 		} else {
@@ -320,23 +319,18 @@ function deleteAccount(email, pass) {
  * @private
  * @description Puts user data back into the database if
  * there was an issue removing their account.
- * @param  {String} email user email
- * @param  {String} pword user password
+ * @param  {Object} authData authorization data
  * @return none
  * @see autoLogin
  * @see module:SessionModule#pruneTemporary
  * @author James Teague II
- * @since 11/6/2014
+ * @since 1/2/2015
  */
-function restoreLostData(email, pass) {
-	//log user back in
-	autoLogin(email,pass);
-	//get authData, eventListener should be off
-	var data = ref.getAuth();
-	if(data.uid){
+function restoreLostData(authData) {
+	if(authData.uid){
 		//insert users temporary data back into the db and remove that data from session object
-		ref.child('users').child(data.uid).set(sessvars.tempData, function(){
-			sessvars.tempData = SessionModule.pruneTemporary(sessvars.tempData);
+		ref.child('users').child(authData.uid).set(sessvars.tempData, function(){
+			sessvars.tempData = SessionModule.pruneTemporary(sessvars);
 		});
 	}
 }
