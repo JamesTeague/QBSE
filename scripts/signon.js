@@ -139,27 +139,43 @@ function autoLogin(email, pword, name) {
  * @since 10/25/2014
  */
 function thirdPartyLogin(provider){
-	ref.authWithOAuthPopup(provider, function(error, authData) {
-		if(error){
-			switch(error.code){
-				case ErrorEnum.USER_CANCELLED:
-					alertify.log("User cancelled action.");
-					break;
-				case ErrorEnum.INVALID_PASSWORD:
-					alertify.error("Password is incorrect.");
-					break;
-				case ErrorEnum.PROVIDER_ERROR:
-					alertify.error(error.message);
-					break;
-				case ErrorEnum.NETWORK_ERROR:
-					alertify.error(error.message);
-					break;
-				default:
-					alertify.alert(error.code + ": Please contact webmaster");
-			}
-		}
-	}, {scope: "email"}); //the permissions requested
+	ref.authWithOAuthPopup(provider, handleLoginError, {scope: "email"}); //the permissions requested
 }
+/**
+ * @function handleLoginError
+ * @description Handles Third-Party login errors, including Transport Unavailable error
+ * that is solved by using redirection
+ * @param {Object} error Error Object from Firebase
+ * @param {Object} authData Authorization Data
+ * @return none
+ * @author James Teague II
+ * @since 1/4/2015
+ */
+var handleLoginError = function (error, authData) {
+	if(error){
+		switch(error.code){
+			case ErrorEnum.USER_CANCELLED:
+				alertify.log("User cancelled action.");
+				break;
+			case ErrorEnum.INVALID_PASSWORD:
+				alertify.error("Password is incorrect.");
+				break;
+			case ErrorEnum.PROVIDER_ERROR:
+				alertify.error(error.message);
+				break;
+			case ErrorEnum.NETWORK_ERROR:
+				alertify.error(error.message);
+				break;
+			case ErrorEnum.TRANSPORT_UNAVAILABLE:
+					alertify.log(error.message);
+					ref.authWithOAuthRedirect(provider, handleLoginError, {scope: "email"});
+				break;
+			default:
+				alertify.alert(error.code + ": Please contact webmaster");
+		}
+	}
+};
+
 /**
  * @function createUser
  * @description create an account and register it with the database
