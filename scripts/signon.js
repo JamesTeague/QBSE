@@ -50,7 +50,8 @@ var ErrorEnum = Object.freeze({
 var ProviderEnum = Object.freeze({
 	FACEBOOK: "facebook",
 	GOOGLE: "google",
-	EMAIL: "password"
+	EMAIL: "password",
+	TWITTER: "twitter"
 });
 
 /**
@@ -168,13 +169,20 @@ function thirdPartyLogin(provider){
  */
 function createUser() {
 	//Grab user input from input boxes on page
-	var pword = $("#password").val();
+	var name = $("#name").val();
+	var emailAddr = $("#addr").val(); 
+	var pword = $("#pword").val();
 	var verify = $("#verify").val();
+	if (name === "" || !name){
+		alertify.error("Please fill out the required field.");
+		$("#name").focus();
+		return;
+	}
 	//verify that the passwords match
 	if(pword === verify){
 		//create the user using Firebase
 		ref.createUser({
-			email    : $("#email").val(),
+			email    : emailAddr,
 			password : pword
 		}, function(error) {
 			if(error){
@@ -189,12 +197,7 @@ function createUser() {
 						alertify.alert(error.code+": Please contact webmaster.");
 				}
 			} else {
-				// $("#email").attr("disabled","disabled");
-				// $("#userPass").attr("disabled","disabled");
-				// $("#verifyPass").attr("disabled","disabled");
-				// alertify.success("You have successfully created an account! \
-				// 	Please log in using your new credentials.");
-				autoLogin($("#email").val(),$("#password").val());
+				autoLogin(emailAddr, pword, name);
 			}
 		});
 	}
@@ -228,6 +231,10 @@ function insertNewUser(user, ename) {
 		userRef.update({"email": user.google.email});
 		userRef.update({"name": user.google.displayName});
 	}
+	else if(user.provider === ProviderEnum.TWITTER){
+		userRef.update({"email": user.twitter.username});
+		userRef.update({"name": user.twitter.displayName});
+	}
 	userRef.once('value', function(snapshot){
 		if(snapshot.val()){
 			sessvars.sessionObj = Object.freeze(snapshot.exportVal());
@@ -259,8 +266,8 @@ function deleteUser(email) {
 			}
 		}, "Enter your password");
 	}
-	else if(authData.provider === ProviderEnum.FACEBOOK || authData.provider === ProviderEnum.GOOGLE) {
-		alertify.confirm("Are you sure you want to remove your Stock Account?", function(e){
+	else if(authData.provider === ProviderEnum.FACEBOOK || authData.provider === ProviderEnum.GOOGLE || authData.provider === ProviderEnum.TWITTER) {
+		alertify.confirm("Are you sure you want to remove your Stock Account? \r\n This will NOT delete your "+ authData.provider + " account.", function(e){
 			if(e){
 				ref.child('users').child(authData.uid).remove(function(error){
 					if(error){
@@ -274,7 +281,6 @@ function deleteUser(email) {
 			}
 		});
 	}
-	
 }
 /**
  * @function deleteAccount
@@ -295,11 +301,11 @@ function deleteAccount(email, pass) {
 			switch(error.code){
 	  			case ErrorEnum.INVALID_PASSWORD:
 	  				alertify.alert("Password was invalid. Your account was not deleted.");
-	  				restoreLostData(email, pass);
+	  				restoreLostData(ref.getAuth());
 	  				break;
 	  			default:
 	  				alertify.alert("OOPS! There was an error on our end! Please try again later or contact the webmaster.", error.code);
-	  				restoreLostData(email, pass);
+	  				restoreLostData(ref.getAuth());
 	  				break;
   			}
 		} else {
@@ -313,23 +319,18 @@ function deleteAccount(email, pass) {
  * @private
  * @description Puts user data back into the database if
  * there was an issue removing their account.
- * @param  {String} email user email
- * @param  {String} pword user password
+ * @param  {Object} authData authorization data
  * @return none
  * @see autoLogin
  * @see module:SessionModule#pruneTemporary
  * @author James Teague II
- * @since 11/6/2014
+ * @since 1/2/2015
  */
-function restoreLostData(email, pass) {
-	//log user back in
-	autoLogin(email,pass);
-	//get authData, eventListener should be off
-	var data = ref.getAuth();
-	if(data.uid){
+function restoreLostData(authData) {
+	if(authData.uid){
 		//insert users temporary data back into the db and remove that data from session object
-		ref.child('users').child(data.uid).set(sessvars.tempData, function(){
-			sessvars.tempData = SessionModule.pruneTemporary(sessvars.tempData);
+		ref.child('users').child(authData.uid).set(sessvars.tempData, function(){
+			sessvars.tempData = SessionModule.pruneTemporary(sessvars);
 		});
 	}
 }

@@ -11,8 +11,8 @@
 		<script type="text/javascript" src="scripts/alertify.min.js"></script>
 		<script src="https://cdn.firebase.com/js/client/1.1.1/firebase.js"></script>
 		<!-- include the core styles -->
-		<link rel="stylesheet" href="scripts/alertify_css/alertify_core.css" />
-		<link rel="stylesheet" href="scripts/alertify_css/alertify_default.css" />
+		<link rel="stylesheet" href="scripts/alertify_css/alertify_core.min.css" />
+		<link rel="stylesheet" href="scripts/alertify_css/alertify_default.min.css" />
 		
 		<title>
 			My Account
@@ -34,7 +34,7 @@
 			}
 			else{
 				$("#email").text(sessvars.sessionObj.email);
-				$("#email_link").text(sessvars.sessionObj.email);
+				$("#email_link").text(sessvars.sessionObj.name);
 			}
 		});
 		</script>
