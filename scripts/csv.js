@@ -53,7 +53,7 @@ var nflQBs = [[]];
  * @param  {String} data data of the file
  * @return none
  * @author James Teague II
- * @since 1/5/2015
+ * @since 1/6/2015
  */
 function parseCSV(data) {
 	var allTextLines = [];
@@ -104,8 +104,10 @@ function findWLD(rec){
 /**
  * @function fillZeroes
  * @description Fills all blank indexes with 
- * @param  {[type]} qbs [description]
- * @return {[type]}     [description]
+ * @param  {Object} qbs array of QBs
+ * @return none
+ * @author James Teague II
+ * @since 1/6/2015
  */
 function fillZeroes(qbs){
 	for (var i = qbs.length - 1; i >= 0; i--) {
@@ -127,6 +129,14 @@ function fillZeroes(qbs){
 function scrubText(text){
 	return text.replace(/\+|\*|\%/g,'');
 }
+/**
+ * @function calcPrice
+ * @description Calculates the Price and the Tier for each QB
+ * @param  {Object} qbs array of QBs
+ * @return none
+ * @author James Teague II
+ * @since 1/6/2015
+ */
 function calcPrice(qbs){
 	var WLx = 3;
 	var Compx = 0.5;
@@ -167,7 +177,13 @@ function calcPrice(qbs){
 		qbs[i].push(price, tier);
 	}
 }
-
+/**
+ * @function addToDB
+ * @param {Object} qbs array of QBs
+ * @returns none
+ * @author James Teague
+ * @since 1/6/2015
+ */
 function addToDB(qbs){
 	for (var ndx = qbs.length - 1; ndx >= 0; ndx--) {
 		ref.child('qb').child(qbs[ndx][1]).set({"price": qbs[ndx][29], "tier": qbs[ndx][30]});
