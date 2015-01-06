@@ -1,5 +1,6 @@
 
 /*jslint white: true */
+var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
 $(function(){
 	if(!sessvars.sessionObj || sessvars.sessionObj.level < 99){
 		$('#content').hide();
@@ -67,12 +68,24 @@ function parseCSV(data) {
 		nflQBs[x] = allTextLines[i].split(',');
 		x++;
 	}
-	for(var ndx in nflQBs){
-		nflQBs[ndx][1] = scrubText(nflQBs[ndx][1]);
-		nflQBs[ndx][9] = scrubText(nflQBs[ndx][9]);
-		nflQBs[ndx][6] = findWLD(nflQBs[ndx][6]);
-	}
 	alertify.success("Data has been parsed.");
+	for (var ndx = nflQBs.length - 1; ndx >= 0; ndx--) {
+		if(nflQBs[ndx][8] < 5){
+			console.log(nflQBs[ndx][1]);
+			nflQBs.splice(ndx,1);
+		}
+		else{
+			nflQBs[ndx][1] = scrubText(nflQBs[ndx][1]);
+			nflQBs[ndx][9] = scrubText(nflQBs[ndx][9]);
+			nflQBs[ndx][6] = findWLD(nflQBs[ndx][6]);
+		}
+	};
+	fillZeroes(nflQBs);
+	alertify.success("Data has been cleaned.")
+	calcPrice(nflQBs);
+	alertify.success("Prices Calculated.")
+	addToDB(nflQBs);
+	alertify.success("Added to Database.");
 }
 /**
  * @function findWLD
@@ -89,6 +102,21 @@ function findWLD(rec){
 	return wld;
 }
 /**
+ * @function fillZeroes
+ * @description Fills all blank indexes with 
+ * @param  {[type]} qbs [description]
+ * @return {[type]}     [description]
+ */
+function fillZeroes(qbs){
+	for (var i = qbs.length - 1; i >= 0; i--) {
+		for(var j = qbs[i].length - 1; j >= 0; j--){
+			if(qbs[i][j] === "" || (isNaN(qbs[i][j]) && typeof qbs[i][j] === "number")){
+				qbs[i][j] = 0;
+			}
+		}
+	};
+}
+/**
  * @function scrubText
  * @description Removes +,*,% from the string
  * @param  {String} text string of almost anything
@@ -98,6 +126,52 @@ function findWLD(rec){
  */
 function scrubText(text){
 	return text.replace(/\+|\*|\%/g,'');
+}
+function calcPrice(qbs){
+	var WLx = 3;
+	var Compx = 0.5;
+	var Yardsx = 0.003;
+	var TDx = 1;
+	var INTx = 2.5;
+	var QBRx = 0.35;
+	var Ratx = 0.20;
+	var INTpx = 1;
+	var FQCx = 12;
+	var GWDx = 8;
+	var tier = 0;
+
+	for (var i = qbs.length - 1; i >= 0; i--) {
+		var price = (WLx*qbs[i][6])
+					+ (Compx*qbs[i][9])
+					+ (Yardsx*qbs[i][10])
+					+ (TDx*qbs[i][11])
+					+ (-INTx*qbs[i][13])
+					+ (QBRx*qbs[i][21])
+					+ (Ratx*qbs[i][20])
+					+ (-INTpx*qbs[i][14])
+					+ (FQCx*qbs[i][27])
+					+ (GWDx*qbs[i][27]);
+		price = price.toFixed(2);
+		if(price <= 50){
+			tier = 4;
+		}
+		else if (price <= 100){
+			tier = 3;
+		}
+		else if (price <= 150){
+			tier = 2;
+		}
+		else {
+			tier = 1;
+		}
+		qbs[i].push(price, tier);
+	}
+}
+
+function addToDB(qbs){
+	for (var ndx = qbs.length - 1; ndx >= 0; ndx--) {
+		ref.child('qb').child(qbs[ndx][1]).set({"price": qbs[ndx][29], "tier": qbs[ndx][30]});
+	};
 }
 /*
  * 0 Rk,
