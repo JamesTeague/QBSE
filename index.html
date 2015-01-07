@@ -72,11 +72,47 @@
 			<div id="stocks"></div>
 			<script id="stockTemplate" type="text/x-handlebars-template">
 				<ul class="list-group">
+				<h3>Tier 1</h3>
 			      {{#qbs}}
+			      {{#ifCond tier '==' 1}}
 			        <li class="list-group-item">
 			        	{{name}}
 			        	<span class="label label-default pull-right">${{price}}</span>
 			        </li>
+			        {{/ifCond}}
+			      {{/qbs}}
+			    </ul>
+			    <ul class="list-group">
+				<h3>Tier 2</h3>
+			      {{#qbs}}
+			      {{#ifCond tier '==' 2}}
+			        <li class="list-group-item">
+			        	{{name}}
+			        	<span class="label label-default pull-right">${{price}}</span>
+			        </li>
+			        {{/ifCond}}
+			      {{/qbs}}
+			    </ul>
+			    <ul class="list-group">
+				<h3>Tier 3</h3>
+			      {{#qbs}}
+			      {{#ifCond tier '==' 3}}
+			        <li class="list-group-item">
+			        	{{name}}
+			        	<span class="label label-default pull-right">${{price}}</span>
+			        </li>
+			        {{/ifCond}}
+			      {{/qbs}}
+			    </ul>
+			    <ul class="list-group">
+				<h3>Tier 4</h3>
+			      {{#qbs}}
+			      {{#ifCond tier '==' 4}}
+			        <li class="list-group-item">
+			        	{{name}}
+			        	<span class="label label-default pull-right">${{price}}</span>
+			        </li>
+			        {{/ifCond}}
 			      {{/qbs}}
 			    </ul>
 			</script>
