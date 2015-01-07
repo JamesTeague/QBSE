@@ -69,9 +69,22 @@
 				<h1>QBSE</h1>
 				<p>The site is currently under construction. There is more to come in the coming weeks</p>
 			</div>
+			<div id="stocks"></div>
+			<script id="stockTemplate" type="text/x-handlebars-template">
+				<ul class="list-group">
+			      {{#qbs}}
+			        <li class="list-group-item">
+			        	{{name}}
+			        	<span class="label label-default pull-right">${{price}}</span>
+			        </li>
+			      {{/qbs}}
+			    </ul>
+			</script>
 		</div>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
 		<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
 		<script src="scripts/bootstrap.min.js"></script>
+		<script src="scripts/handlebars.js"></script>
 		<!-- Alertify -->
 		<script type="text/javascript" src="scripts/alertify.min.js"></script>
 		<!-- QBSE -->
@@ -79,5 +92,6 @@
 		<script type="text/javascript" src="scripts/sessvars.js"></script>
 		<script type="text/javascript" src="scripts/sessionModule.js"></script>
 		<script type="text/javascript" src="scripts/signon.js"></script>
+		<script src="scripts/stockTemplate.js"></script>
 	</body>
 </html>
