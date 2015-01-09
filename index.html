@@ -67,53 +67,69 @@
 		<div class="container">
 			<div class="jumbotron">
 				<h1>QBSE</h1>
-				<p>The site is currently under construction. There is more to come in the coming weeks</p>
+				<p>The site is currently under construction. There is more to come in the coming weeks.</p>
 			</div>
 			<div id="stocks"></div>
 			<script id="stockTemplate" type="text/x-handlebars-template">
 				<ul class="list-group">
-				<h3>Tier 1</h3>
-			      {{#qbs}}
-			      {{#ifCond tier '==' 1}}
-			        <li class="list-group-item">
-			        	{{name}}
-			        	<span class="label label-default pull-right">${{price}}</span>
-			        </li>
-			        {{/ifCond}}
-			      {{/qbs}}
+					<h2>Tier 1</h2>
+			        {{#qbs}}
+				        {{#ifCond tier '==' 1}}
+					        <div>
+							    <a id={{ref}} class="list-group-item" onclick="buyQB(this.id)">
+								    <h5 class="list-group-item-heading">{{name}} <span class="label label-default pull-right">${{price}}</span></h5>
+								    <p class="list-group-item-text">
+								  		{{disp.yards}} yards, {{disp.TD}} TD, {{disp.INT}} INT, {{disp.Comp}}% 
+								    </p>
+							    </a>
+						    </div>
+				        {{/ifCond}}
+			        {{/qbs}}
 			    </ul>
 			    <ul class="list-group">
-				<h3>Tier 2</h3>
-			      {{#qbs}}
-			      {{#ifCond tier '==' 2}}
-			        <li class="list-group-item">
-			        	{{name}}
-			        	<span class="label label-default pull-right">${{price}}</span>
-			        </li>
-			        {{/ifCond}}
-			      {{/qbs}}
+					<h2>Tier 2</h2>
+			        {{#qbs}}
+				        {{#ifCond tier '==' 2}}
+					        <div>
+							    <a id={{ref}} class="list-group-item" onclick="buyQB(this.id)">
+								    <h5 class="list-group-item-heading">{{name}} <span class="label label-default pull-right">${{price}}</span></h5>
+								    <p class="list-group-item-text">
+								  		{{disp.yards}} yards, {{disp.TD}} TD, {{disp.INT}} INT, {{disp.Comp}}% 
+								    </p>
+							    </a>
+						    </div>
+				        {{/ifCond}}
+			        {{/qbs}}
 			    </ul>
 			    <ul class="list-group">
-				<h3>Tier 3</h3>
-			      {{#qbs}}
-			      {{#ifCond tier '==' 3}}
-			        <li class="list-group-item">
-			        	{{name}}
-			        	<span class="label label-default pull-right">${{price}}</span>
-			        </li>
-			        {{/ifCond}}
-			      {{/qbs}}
+					<h2>Tier 3</h2>
+			        {{#qbs}}
+				        {{#ifCond tier '==' 3}}
+					        <div>
+							    <a id={{ref}} class="list-group-item" onclick="buyQB(this.id)">
+								    <h5 class="list-group-item-heading">{{name}} <span class="label label-default pull-right">${{price}}</span></h5>
+								    <p class="list-group-item-text">
+								  		{{disp.yards}} yards, {{disp.TD}} TD, {{disp.INT}} INT, {{disp.Comp}}% 
+								    </p>
+							    </a>
+						    </div>
+				        {{/ifCond}}
+			        {{/qbs}}
 			    </ul>
 			    <ul class="list-group">
-				<h3>Tier 4</h3>
-			      {{#qbs}}
-			      {{#ifCond tier '==' 4}}
-			        <li class="list-group-item">
-			        	{{name}}
-			        	<span class="label label-default pull-right">${{price}}</span>
-			        </li>
-			        {{/ifCond}}
-			      {{/qbs}}
+					<h2>Tier 4</h2>
+			        {{#qbs}}
+				        {{#ifCond tier '==' 4}}
+					        <div>
+							    <a id={{ref}} class="list-group-item" onclick="buyQB(this.id)">
+								    <h5 class="list-group-item-heading">{{name}} <span class="label label-default pull-right">${{price}}</span></h5>
+								    <p class="list-group-item-text">
+								  		{{disp.yards}} yards, {{disp.TD}} TD, {{disp.INT}} INT, {{disp.Comp}}% 
+								    </p>
+							    </a>
+						    </div>
+				        {{/ifCond}}
+			        {{/qbs}}
 			    </ul>
 			</script>
 		</div>

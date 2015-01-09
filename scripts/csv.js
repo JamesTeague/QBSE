@@ -76,6 +76,8 @@ function parseCSV(data) {
 		}
 		else{
 			nflQBs[ndx][1] = scrubText(nflQBs[ndx][1]);
+			//creating a reference for QB
+			nflQBs[ndx].push(nflQBs[ndx][1].replace(" ","_"));
 			nflQBs[ndx][9] = scrubText(nflQBs[ndx][9]);
 			nflQBs[ndx][6] = findWLD(nflQBs[ndx][6]);
 		}
@@ -186,7 +188,17 @@ function calcPrice(qbs){
  */
 function addToDB(qbs){
 	for (var ndx = qbs.length - 1; ndx >= 0; ndx--) {
-		ref.child('qb').child(qbs[ndx][1]).set({"price": qbs[ndx][29], "tier": qbs[ndx][30]});
+		ref.child('qb').child(qbs[ndx][1]).set({
+			"reference": qbs[ndx][29], 
+			"price": qbs[ndx][30], 
+			"tier": qbs[ndx][31],
+			"displayInfo": {
+				"yards": qbs[ndx][10],
+				"TD": qbs[ndx][11],
+				"INT": qbs[ndx][13],
+				"Comp": qbs[ndx][9]
+			}
+		});
 	};
 }
 /*
