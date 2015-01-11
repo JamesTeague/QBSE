@@ -452,7 +452,7 @@ function logout() {
 var handleLogon = function (authData) {
 	var go = false;
 	var beenRedirected = false;
-	if(window.location.href.indexOf("myaccount.html") > -1){
+	if(window.location.href.indexOf("index.html") > -1){
 		beenRedirected = true;
 	}
 	if (authData) {
@@ -478,7 +478,7 @@ var handleLogon = function (authData) {
 				}
 				if(go || (sessvars.sessionObj && authData && !beenRedirected)){
 					go = false;
-					window.location.href = "https://qb-stock-exchange.firebaseapp.com/myaccount.html";
+					window.location.href = "https://qb-stock-exchange.firebaseapp.com/index.html";
 				}
 				else{
 					SessionModule.freeze(sessvars.sessionObj);
