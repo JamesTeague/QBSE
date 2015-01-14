@@ -173,6 +173,9 @@ function calcPrice(qbs){
 		else if (price <= 150){
 			tier = 2;
 		}
+		else if (price <= 0){
+			nflQBs.splice(i,1);
+		}
 		else {
 			tier = 1;
 		}

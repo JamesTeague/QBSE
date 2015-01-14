@@ -219,6 +219,7 @@ function insertNewUser(user, ename) {
 	var userRef = ref.child('users').child(user.uid);
 	userRef.child('purse').set(20000);
 	userRef.child('level').set(0);
+	userRef.child('flags').set({"tier1": false, "tier2": false, "tier3": false, "tier4": false});
 	if(user.provider === ProviderEnum.EMAIL){
 		userRef.update({"email": user.password.email});
 		userRef.update({"name": name});
@@ -238,7 +239,7 @@ function insertNewUser(user, ename) {
 	userRef.once('value', function(snapshot){
 		if(snapshot.val()){
 			sessvars.sessionObj = Object.freeze(snapshot.exportVal());
-			window.location.href = "https://qb-stock-exchange.firebaseapp.com/myaccount.html";
+			window.location.href = "https://qb-stock-exchange.firebaseapp.com/market.html";
 		}
 	});
 }
@@ -451,9 +452,9 @@ function logout() {
  */
 var handleLogon = function (authData) {
 	var go = false;
-	var beenRedirected = false;
+	var beenRedirected = true;
 	if(window.location.href.indexOf("index.html") > -1){
-		beenRedirected = true;
+		beenRedirected = false;
 	}
 	if (authData) {
 		//keep this from being run again
@@ -478,7 +479,7 @@ var handleLogon = function (authData) {
 				}
 				if(go || (sessvars.sessionObj && authData && !beenRedirected)){
 					go = false;
-					window.location.href = "https://qb-stock-exchange.firebaseapp.com/index.html";
+					window.location.href = "https://qb-stock-exchange.firebaseapp.com/market.html";
 				}
 				else{
 					SessionModule.freeze(sessvars.sessionObj);
