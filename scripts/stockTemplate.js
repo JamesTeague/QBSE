@@ -135,11 +135,16 @@ function buyQB(refID) {
 							//new total of purchased stocks
 							var newTotal = curTotal + amt;
 							//update the object
-							$.extend(sessvars.sessionObj.stocks, {[refID] :{"price": qb.price, "amount": newTotal, "tier": qb.tier}});
+							var qbName = {};
+							qbName[refID] = {"price": qb.price, "amount": newTotal, "tier": qb.tier};
+
+							$.extend(sessvars.sessionObj.stocks, qbName);
 						}
 						else{
 							//update the object
-							$.extend(sessvars.sessionObj.stocks, {[refID] :{"price": qb.price, "amount": amt, "tier": qb.tier}});
+							var qbName = {};
+							qbName[refID] = {"price": qb.price, "amount": amt, "tier": qb.tier};
+							$.extend(sessvars.sessionObj.stocks, qbName);
 						}
 						//freeze to prevent further unauthorized changes
 						SessionModule.freeze(sessvars.sessionObj);
@@ -148,7 +153,9 @@ function buyQB(refID) {
 					}
 					else{
 						//add the first stock to session object
-						sessvars.sessionObj.stocks = {[refID] :{"price": qb.price, "amount": amt, "tier":qb.tier}};
+						var qbName = {};
+						qbName[refID] = {"price": qb.price, "amount": parseInt(str), "tier": qb.tier};
+						sessvars.sessionObj.stocks = qbName;
 						SessionModule.freeze(sessvars.sessionObj);
 						updateSidebar(false);
 						alertify.success(amt + " stocks purchased!");
