@@ -479,7 +479,7 @@ var handleLogon = function (authData) {
 				}
 				if(go || (sessvars.sessionObj && authData && !beenRedirected)){
 					go = false;
-					window.location.href = "/market";
+					window.location.href = "qbse.herokuapp.com/market";
 				}
 				else{
 					SessionModule.freeze(sessvars.sessionObj);
