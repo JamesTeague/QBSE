@@ -14,6 +14,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.home);
 app.get('/market', routes.market)
+app.get('/admin', routes.admin)
+app.get('/myaccount', routes.myaccount)
+app.get('/signup', routes.signup)
+
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -6,10 +6,10 @@ $(function(){
 		$('#content').hide();
 		alertify.confirm("Sorry! You do not have access to this page.", function(e){
 			if(e){
-				window.location.href = "https://qb-stock-exchange.firebaseapp.com";
+				window.location.href = "/";
 			}
 			else{
-				window.location.href = "https://qb-stock-exchange.firebaseapp.com";
+				window.location.href = "/";
 			}
 		});
 	}
