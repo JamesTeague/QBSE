@@ -14,7 +14,6 @@ app.use(express.static(path.join(__dirname, 'public/html')));
 
 
 app.use('/', routes);
-app.use('/market', routes);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
