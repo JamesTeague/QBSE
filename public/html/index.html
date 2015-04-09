@@ -69,10 +69,10 @@
 				<p>The site is currently under construction. There is more to come in the coming weeks.</p>
 			</div> -->
 			<div id="stocks"></div>
-			<div id="sidebar-menu" ng-controller="SidebarCtrl" class="col-md-1 hidden-xs hidden-sm hidden">
+			<div id="sidebar-menu" class="col-md-1 hidden-xs hidden-sm hidden">
 		        <ul class="main-menu nav nav-stacked affix">
-		        	<li id="username">{{scope.name}}</li>
-		        	<li ng-repeat="stock in scope.stocks">{{stock.name}} {{stock.price}}</li>
+		        	<li id="username"></li>
+		        	<li ng-repeat="stock in scope.stocks"></li>
 		    	</ul>
 		    </div>
 				<ul class="list-group">
