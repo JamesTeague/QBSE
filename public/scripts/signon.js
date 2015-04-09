@@ -239,7 +239,7 @@ function insertNewUser(user, ename) {
 	userRef.once('value', function(snapshot){
 		if(snapshot.val()){
 			sessvars.sessionObj = Object.freeze(snapshot.exportVal());
-			window.location.href = "https://qb-stock-exchange.firebaseapp.com/market.html";
+			window.location.href = "/market";
 		}
 	});
 }
@@ -432,7 +432,7 @@ function resetPassword(email, op, np) {
 function logout() {
 	SessionModule.destroySession(sessvars);
 	ref.unauth();
-	window.location.href = "https://qb-stock-exchange.firebaseapp.com";
+	window.location.href = "/";
 }
 /**
  * @function handleLogon
@@ -479,7 +479,7 @@ var handleLogon = function (authData) {
 				}
 				if(go || (sessvars.sessionObj && authData && !beenRedirected)){
 					go = false;
-					window.location.href = "https://qb-stock-exchange.firebaseapp.com/market.html";
+					window.location.href = "/market";
 				}
 				else{
 					SessionModule.freeze(sessvars.sessionObj);

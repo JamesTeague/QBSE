@@ -46,5 +46,9 @@ app.use(function(err, req, res, next) {
     });
 });
 
+app.listen(3001, 'localhost', function() {
+  console.log("... port %d in %s mode", app.port, app.settings.env);
+});
+
 
 module.exports = app;
