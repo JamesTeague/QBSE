@@ -10,6 +10,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(express.static(path.join(__dirname, 'public/html')));
+app.use(express.static(path.join(__dirname, 'public/images')));
+app.use(express.static(path.join(__dirname, 'public/scripts')));
+app.use(express.static(path.join(__dirname, 'public/styles')));
 
 
 app.use('/', routes);
