@@ -1,6 +1,6 @@
 exports.home = function(req, res){
-	res.sendfile('index.html')
+	res.sendfile('index.html');
 };
 exports.market = function(req, res) {
-	res.sendfile('market.html')
+	res.sendfile('index.html');
 };	
