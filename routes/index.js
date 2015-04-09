@@ -10,5 +10,3 @@ exports.home = function (req, res) {
 exports.market = function (req, res) {
 	res.sendfile('market.html');
 };
-
-module.exports = router;
