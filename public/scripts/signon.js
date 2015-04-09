@@ -452,10 +452,10 @@ function logout() {
  */
 var handleLogon = function (authData) {
 	var go = false;
-	var beenRedirected = true;
-	if(window.location.href.indexOf("index.html") > -1){
-		beenRedirected = false;
-	}
+	// var beenRedirected = true;
+	// if(window.location.href.indexOf("index.html") > -1){
+	// 	beenRedirected = false;
+	// }
 	if (authData) {
 		//keep this from being run again
 		ref.offAuth(handleLogon);
