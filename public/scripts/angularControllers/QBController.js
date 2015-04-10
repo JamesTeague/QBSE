@@ -6,7 +6,7 @@
  * @since 4/7/2015
  */
 
-app.factory("quarterbacks", ["$firebaseArray",
+qbApp.factory("quarterbacks", ["$firebaseArray",
   function($firebaseArray) {
     // create a reference to the Firebase where we will store our data
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/qb");
@@ -16,7 +16,7 @@ app.factory("quarterbacks", ["$firebaseArray",
   }
 ]);
 
-app.controller("QBCtrl", ["$scope", "quarterbacks",
+qbApp.controller("QBCtrl", ["$scope", "quarterbacks",
 	// we pass our new quarterbacks factory into the controller
 	function($scope, quarterbacks) {
     	// we add quarterbacks array to the scope to be used in our ng-repeat

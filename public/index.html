@@ -14,7 +14,7 @@
 			Sign-On Test
 		</title>
 	</head>
-	<body ng-app="QBTemplate">
+	<body ng-app="MainApp" ng-controller="MainCtrl">
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="navbar-inner">
 				<div class="container-fluid">
@@ -37,24 +37,24 @@
 									<span class="caret"></span>
 								</a>
 								<div class="dropdown-menu">
-									<form id="login_form" action="javascript:login()" accept-charset="UTF-8">
+									<form id="login_form" accept-charset="UTF-8">
 										<div class="input-group">
 											<span class="input-group-addon" id="addon1">@</span>
-											<input class="form-control" type="email" id="email" placeholder="Email" aria-describedby="addon1">
+											<input class="form-control" type="email" id="email" ng-modal="email" placeholder="Email" aria-describedby="addon1">
 										</div>
 										<div class="input-group">
 											<span class="input-group-addon" id="addon2">•••</span>
-											<input class="form-control" type="password" id="password" placeholder="Password" aria-describedby="addon2">
+											<input class="form-control" type="password" id="password" ng-modal="password"placeholder="Password" aria-describedby="addon2">
 										</div>
 										<br/>
-										<input class="btn btn-success btn-block" type="submit" value="Submit">
+										<input class="btn btn-success btn-block" type="submit" ng-click="login()" value="Submit">
 										<input class="btn btn-warning btn-block" type="button" value="Forgot Password" onclick="forgotPassword()">
 									</form>
 									<hr/>
 									<div class="btn-group-vertical btn-group-justified">
-										<input class="btn btn-primary btn-block" type="button" value="Facebook" onclick="thirdPartyLogin('facebook')">
-										<input class="btn btn-danger btn-block" type="button" value="Google" onclick="thirdPartyLogin('google')">
-										<input class="btn btn-info btn-block" type="button" value="Twitter" onclick="thirdPartyLogin('twitter')">
+										<input class="btn btn-primary btn-block" type="button" value="Facebook" ng-click="thirdPartyLogin('facebook')">
+										<input class="btn btn-danger btn-block" type="button" value="Google" ng-click="thirdPartyLogin('google')">
+										<input class="btn btn-info btn-block" type="button" value="Twitter" ng-click="thirdPartyLogin('twitter')">
 									</div>
 								</div>
 							</li>
@@ -63,15 +63,15 @@
 				</div>
 			</div>
 		</nav>
-		<div class="container" ng-controller="QBCtrl">
+		<div class="container" ng-app="QBTemplate" ng-controller="QBCtrl">
 			<!-- <div class="jumbotron">
 				<h1>QBSE</h1>
 				<p>The site is currently under construction. There is more to come in the coming weeks.</p>
 			</div> -->
 			<div id="stocks"></div>
-			<div id="sidebar-menu" class="col-md-1 hidden-xs hidden-sm hidden">
+			<div id="sidebar-menu" class="col-md-1 hidden-xs hidden-sm" ng-if="authData">
 		        <ul class="main-menu nav nav-stacked affix">
-		        	<li id="username"></li>
+		        	<li id="username">{{$scope.name}}</li>
 		        	<li ng-repeat="stock in scope.stocks"></li>
 		    	</ul>
 		    </div>
