@@ -1,6 +1,6 @@
 app.controller("MainCtrl", ["$scope", "$firebaseAuth",
   function($scope, $firebaseAuth) {
-    var ref = new Firebase("https://docs-sandbox.firebaseio.com");
+    var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     auth = $firebaseAuth(ref);
 
     $scope.login = function(useremail, userpassword) {
