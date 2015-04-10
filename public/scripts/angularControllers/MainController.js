@@ -76,7 +76,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
           }
         });
     }
-  }//End Auth
+  },//End Auth
 
   function($firebaseObject) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
