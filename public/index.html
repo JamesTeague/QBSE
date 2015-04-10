@@ -29,7 +29,7 @@
 						<ul class="nav navbar-nav">
 							<li class="active"><a href="/market">Market</a></li>
 						</ul>
-						<p ng-if="authData" class="navbar-text navbar-right">Signed in as <a href="/myaccount" class="navbar-link" id="email_link">{{authData.name}}</a></p>
+						<p ng-if="authData" class="navbar-text navbar-right">Signed in as <a href="/myaccount" class="navbar-link" id="email_link">{{authData.google.displayName}}</a></p>
 						<ul ng-if="authData" class="nav navbar-nav navbar-right">
 							<li><button type="button" class="btn btn-default navbar-btn" onclick="logout()">Log Out</button></li>
 						</ul>
