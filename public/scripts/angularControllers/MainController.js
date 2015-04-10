@@ -12,10 +12,10 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth",
         password: "mypassword"
       }).then(function(authData) {
         $scope.authData = authData;
-        var isMobile = false;
-        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-          isMobile = true;
-        }
+        // var isMobile = false;
+        // if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        //   isMobile = true;
+        // }
         alertify.success("Logged in as:", authData.uid);
       }).catch(function(error) {
           switch (error.code){
@@ -72,7 +72,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth",
               alertify.error(error.message);
               break;
             default:
-              alertify.alert(error.code + ": Please contact webmaster");
+              alertify.alert(error.code + " " + error.message + " " + provider);
           }
         });
       }
