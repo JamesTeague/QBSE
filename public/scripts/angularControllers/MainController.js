@@ -6,7 +6,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth",
     $scope.login = function(useremail, userpassword) {
       $scope.authData = null;
       $scope.error = null;
-      console.log("Called.", useremail, userpassword);
+      // console.log("Called.", useremail, userpassword);
       auth.$authWithPassword({
         email: useremail,
         password: userpassword
@@ -75,9 +75,16 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth",
               alertify.alert(error.code + " " + error.message + " " + provider);
           }
         });
-      }
     }
+  }
 ]);
+
+// app.factory("Auth", ["$firebaseAuth",
+//   function($firebaseAuth) {
+//     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
+//     return $firebaseAuth(ref);
+//   }
+// ]);
 
 app.factory("quarterbacks", ["$firebaseArray",
   function($firebaseArray) {

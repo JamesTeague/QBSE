@@ -500,4 +500,4 @@ var handleLogon = function (authData) {
  * @author James Teague II
  * @since 10/13/2014
  */
-ref.onAuth(handleLogon);
+// ref.onAuth(handleLogon);
