@@ -78,3 +78,30 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth",
       }
     }
 ]);
+
+app.factory("quarterbacks", ["$firebaseArray",
+  function($firebaseArray) {
+    // create a reference to the Firebase where we will store our data
+    var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/qb");
+
+    // this uses AngularFire to create the synchronized array
+    return $firebaseArray(ref);
+  }
+]);
+
+app.controller("QBCtrl", ["$scope", "quarterbacks",
+  // we pass our new quarterbacks factory into the controller
+  function($scope, quarterbacks) {
+      // we add quarterbacks array to the scope to be used in our ng-repeat
+      $scope.qbs = quarterbacks;
+    }
+]);
+
+app.controller("SidebarCtrl", ["$firebaseObject",
+  function($firebaseObject) {
+    var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
+    // download users's profile data into a local object
+    // all server changes are applied in realtime
+    $scope.profile = $firebaseObject(ref.child('users').child(authData.uid));
+  }
+]);
