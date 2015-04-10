@@ -29,12 +29,17 @@
 						<ul class="nav navbar-nav">
 							<li class="active"><a href="/market">Market</a></li>
 						</ul>
-						<p ng-if="authData" class="navbar-text navbar-right">Signed in as <a href="/myaccount" class="navbar-link" id="email_link">{{authData.google.displayName}}</a></p>
+						<p ng-if="authData" ng-switch="authData.provider"class="navbar-text navbar-right">Signed in as 
+							<a ng-switch-when="password" href="/myaccount" class="navbar-link" id="email_link">{{profile.name}}</a>
+							<a ng-switch-when="facebook" href="/myaccount" class="navbar-link" id="email_link">{{authData.facebook.displayName}}</a>
+							<a ng-switch-when="google"href="/myaccount" class="navbar-link" id="email_link">{{authData.google.displayName}}</a>
+							<a ng-switch-when="twitter"href="/myaccount" class="navbar-link" id="email_link">{{authData.twitter.displayName}}</a>
+						</p>
 						<ul ng-if="authData" class="nav navbar-nav navbar-right">
 							<li><button type="button" class="btn btn-default navbar-btn" onclick="logout()">Log Out</button></li>
 						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li ng-if="!authData"><a href="/signup">Sign Up</a></li>
+						<ul ng-if="!authData" class="nav navbar-nav navbar-right">
+							<li><a href="/signup">Sign Up</a></li>
 							<li class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 									Sign In

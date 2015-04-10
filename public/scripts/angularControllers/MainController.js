@@ -1,4 +1,4 @@
-app.controller("MainCtrl", ["$scope", "$firebaseAuth",
+app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
   function($scope, $firebaseAuth) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     auth = $firebaseAuth(ref);
@@ -56,7 +56,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth",
     $scope.thirdPartyLogin = function(provider){
       auth.$authWithOAuthPopup(provider).then(function(authData) {
         $scope.authData = authData;
-        alertify.success("Logged in as:", authData.uid);
+        alertify.success("Logged in as:", authData.provi);
       }).catch(function(error) {
           switch(error.code){
             case ErrorEnum.USER_CANCELLED:
@@ -76,6 +76,13 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth",
           }
         });
     }
+  }//End Auth
+
+  function($firebaseObject) {
+    var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
+    // download users's profile data into a local object
+    // all server changes are applied in realtime
+    $scope.profile = $firebaseObject(ref.child('users').child(authData.uid));
   }
 ]);
 
