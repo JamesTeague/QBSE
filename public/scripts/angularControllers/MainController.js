@@ -6,10 +6,10 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth",
     $scope.login = function() {
       $scope.authData = null;
       $scope.error = null;
-
+      console.log("Called.");
       auth.$authWithPassword({
-        email: email,
-        password: password
+        email: useremail,
+        password: userpassword
       }).then(function(authData) {
         $scope.authData = authData;
         alertify.success("Logged in as:", authData.uid);

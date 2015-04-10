@@ -37,14 +37,14 @@
 									<span class="caret"></span>
 								</a>
 								<div class="dropdown-menu">
-									<form id="login_form" accept-charset="UTF-8">
+									<form id="login_form" accept-charset="UTF-8" novalidate>
 										<div class="input-group">
 											<span class="input-group-addon" id="addon1">@</span>
-											<input class="form-control" type="email" id="email" ng-model="email" placeholder="Email" aria-describedby="addon1">
+											<input class="form-control" type="email" id="email" ng-model="useremail" placeholder="Email" aria-describedby="addon1">
 										</div>
 										<div class="input-group">
 											<span class="input-group-addon" id="addon2">•••</span>
-											<input class="form-control" type="password" id="password" ng-model="password"placeholder="Password" aria-describedby="addon2">
+											<input class="form-control" type="password" id="password" ng-model="userpassword"placeholder="Password" aria-describedby="addon2">
 										</div>
 										<br/>
 										<input class="btn btn-success btn-block" type="submit" ng-click="login()" value="Submit">
