@@ -12,12 +12,12 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth",
         password: "mypassword"
       }).then(function(authData) {
         $scope.authData = authData;
-        // var isMobile = false;
-        // if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-        //   isMobile = true;
-        // }
         alertify.success("Logged in as:", authData.uid);
       }).catch(function(error) {
+          var isMobile = false;
+          if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+            isMobile = true;
+          }
           switch (error.code){
             case ErrorEnum.INVALID_PASSWORD:
               if(isMobile){
