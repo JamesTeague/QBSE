@@ -81,9 +81,9 @@
 			<div id="sidebar-menu" class="col-md-1 hidden-xs hidden-sm" ng-if="authData">
 		        <ul ng-switch="authData.provider" class="main-menu nav nav-stacked affix">
 		        	<li ng-switch-when="password" id="username">{{profile.name}}</li>
-		        	<li ng-switch-when="facebook" id="username">{{{authData.facebook.displayName}}</li>
-		        	<li ng-switch-when="google" id="username">{{{authData.google.displayName}}</li>
-		        	<li ng-switch-when="twitter" id="username">{{{authData.twitter.displayName}}</li>
+		        	<li ng-switch-when="facebook" id="username">{{authData.facebook.displayName}}</li>
+		        	<li ng-switch-when="google" id="username">{{authData.google.displayName}}</li>
+		        	<li ng-switch-when="twitter" id="username">{{authData.twitter.displayName}}</li>
 		        	<li ng-repeat="stock in scope.stocks"></li>
 		    	</ul>
 		    </div>
