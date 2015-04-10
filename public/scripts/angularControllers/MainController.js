@@ -1,5 +1,5 @@
 app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
-  function($scope, $firebaseAuth) {
+  function($scope, $firebaseAuth, $firebaseObject) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     auth = $firebaseAuth(ref);
 
@@ -12,6 +12,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
         password: userpassword
       }).then(function(authData) {
         $scope.authData = authData;
+        $scope.profile = $firebaseObject(ref.child('users').child(authData.uid));
         alertify.success("Logged in as:", authData.uid);
       }).catch(function(error) {
           var isMobile = false;
@@ -56,6 +57,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
     $scope.thirdPartyLogin = function(provider){
       auth.$authWithOAuthPopup(provider).then(function(authData) {
         $scope.authData = authData;
+        $scope.profile = $firebaseObject(ref.child('users').child(authData.uid));
         alertify.success("Logged in as:", authData.provi);
       }).catch(function(error) {
           switch(error.code){
@@ -76,13 +78,6 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
           }
         });
     }
-  },//End Auth
-
-  function($firebaseObject) {
-    var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
-    // download users's profile data into a local object
-    // all server changes are applied in realtime
-    $scope.profile = $firebaseObject(ref.child('users').child(authData.uid));
   }
 ]);
 
