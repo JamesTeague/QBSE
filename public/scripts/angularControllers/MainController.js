@@ -3,7 +3,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth",
     var ref = new Firebase("https://docs-sandbox.firebaseio.com");
     auth = $firebaseAuth(ref);
 
-    $scope.login = function() {
+    $scope.login = function(useremail, userpassword) {
       $scope.authData = null;
       $scope.error = null;
       console.log("Called.");
