@@ -29,7 +29,7 @@
 						<ul class="nav navbar-nav">
 							<li class="active"><a href="/market">Market</a></li>
 						</ul>
-						<p ng-if="authData" ng-switch="authData.provider"class="navbar-text navbar-right">Signed in as 
+						<p ng-if="authData" ng-switch="authData.provider" class="navbar-text navbar-right">Signed in as 
 							<a ng-switch-when="password" href="/myaccount" class="navbar-link" id="email_link">{{profile.name}}</a>
 							<a ng-switch-when="facebook" href="/myaccount" class="navbar-link" id="email_link">{{authData.facebook.displayName}}</a>
 							<a ng-switch-when="google"href="/myaccount" class="navbar-link" id="email_link">{{authData.google.displayName}}</a>
@@ -79,8 +79,11 @@
 			</div> -->
 			<div id="stocks"></div>
 			<div id="sidebar-menu" class="col-md-1 hidden-xs hidden-sm" ng-if="authData">
-		        <ul class="main-menu nav nav-stacked affix">
-		        	<li id="username">{{$scope.name}}</li>
+		        <ul ng-switch="authData.provider" class="main-menu nav nav-stacked affix">
+		        	<li ng-switch-when="password" id="username">{{profile.name}}</li>
+		        	<li ng-switch-when="facebook" id="username">{{{authData.facebook.displayName}}</li>
+		        	<li ng-switch-when="google" id="username">{{{authData.google.displayName}}</li>
+		        	<li ng-switch-when="twitter" id="username">{{{authData.twitter.displayName}}</li>
 		        	<li ng-repeat="stock in scope.stocks"></li>
 		    	</ul>
 		    </div>
