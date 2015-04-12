@@ -14,6 +14,10 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
         $scope.authData = authData;
         $scope.profile = $firebaseObject(ref.child('users').child(authData.uid));
         alertify.success("Logged in as:", authData.uid);
+        if(authData.password.isTemporaryPassword){
+          alertify.alert("You have logged in with temporary password and you must change it.");
+          
+        }
       }).catch(function(error) {
           var isMobile = false;
           if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
@@ -58,7 +62,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
       auth.$authWithOAuthPopup(provider).then(function(authData) {
         $scope.authData = authData;
         $scope.profile = $firebaseObject(ref.child('users').child(authData.uid));
-        alertify.success("Logged in as:", authData.provi);
+        alertify.success("Logged in successfully!");
       }).catch(function(error) {
           switch(error.code){
             case ErrorEnum.USER_CANCELLED:
@@ -78,6 +82,19 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
           }
         });
     }
+
+    $scope.changePassword = function(){
+      $scope.authObj.$changePassword({
+        email: $scope.authData.password.email,
+        oldPassword: "mypassword",
+        newPassword: "otherpassword"
+      }).then(function() {
+        console.log("Password changed successfully!");
+      }).catch(function(error) {
+        console.error("Error: ", error);
+      });
+    }
+
   }
 ]);
 
@@ -106,7 +123,7 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
     }
 ]);
 
-app.controller("SidebarCtrl", ["$firebaseObject",
+app.controller("StockCtrl", ["$firebaseObject",
   function($firebaseObject) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     // download users's profile data into a local object

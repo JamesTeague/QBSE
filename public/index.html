@@ -36,7 +36,7 @@
 							<a ng-switch-when="twitter"href="/myaccount" class="navbar-link" id="email_link">{{authData.twitter.displayName}}</a>
 						</p>
 						<ul ng-if="authData" class="nav navbar-nav navbar-right">
-							<li><button type="button" class="btn btn-default navbar-btn" onclick="logout()">Log Out</button></li>
+							<li><button type="button" class="btn btn-default navbar-btn" ng-click="authData.$unauth()">Log Out</button></li>
 						</ul>
 						<ul ng-if="!authData" class="nav navbar-nav navbar-right">
 							<li><a href="/signup">Sign Up</a></li>
@@ -72,19 +72,26 @@
 				</div>
 			</div>
 		</nav>
-		<div class="container" ng-app="QBTemplate" ng-controller="QBCtrl">
+		<div class="container" ng-controller="QBCtrl">
 			<!-- <div class="jumbotron">
 				<h1>QBSE</h1>
 				<p>The site is currently under construction. There is more to come in the coming weeks.</p>
 			</div> -->
 			<div id="stocks"></div>
-			<div id="sidebar-menu" class="col-md-1 hidden-xs hidden-sm" ng-if="authData">
+			<div id="sidebar-menu" class="col-md-1 hidden-xs hidden-sm" ng-if="authData" ng-controller="StockCtrl">
 		        <ul ng-switch="authData.provider" class="main-menu nav nav-stacked affix">
 		        	<li ng-switch-when="password" id="username">{{profile.name}}</li>
 		        	<li ng-switch-when="facebook" id="username">{{authData.facebook.displayName}}</li>
 		        	<li ng-switch-when="google" id="username">{{authData.google.displayName}}</li>
 		        	<li ng-switch-when="twitter" id="username">{{authData.twitter.displayName}}</li>
-		        	<li ng-repeat="stock in scope.stocks"></li>
+		        	<li ng-repeat="stock in scope.profile.stocks">
+		        		<ul>
+		        			<li>
+		        				{{stock.$id}}
+		        				<li>{{stock.amount}}, {{stock.price}}</li>
+		        			</li>
+		        		</ul>
+		        	</li>
 		    	</ul>
 		    </div>
 				<ul class="list-group">
