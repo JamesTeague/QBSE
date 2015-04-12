@@ -84,7 +84,7 @@
 		        	<li ng-switch-when="facebook" id="username">{{authData.facebook.displayName}}</li>
 		        	<li ng-switch-when="google" id="username">{{authData.google.displayName}}</li>
 		        	<li ng-switch-when="twitter" id="username">{{authData.twitter.displayName}}</li>
-		        	<li ng-repeat="stock in scope.profile.stocks">
+		        	<li ng-repeat="stock in profile.stocks">
 		        		<ul>
 		        			<li>
 		        				{{stock.$id}}
