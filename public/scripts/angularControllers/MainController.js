@@ -123,7 +123,7 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
     }
 ]);
 
-app.controller("StockCtrl", ["$firebaseObject",
+app.controller("StockCtrl", ["$scope","$firebaseObject",
   function($firebaseObject) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     // download users's profile data into a local object
