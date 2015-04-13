@@ -36,7 +36,7 @@
 							<a ng-switch-when="twitter"href="/myaccount" class="navbar-link" id="email_link">{{authData.twitter.displayName}}</a>
 						</p>
 						<ul ng-if="authData" class="nav navbar-nav navbar-right">
-							<li><button type="button" class="btn btn-default navbar-btn" ng-click="authData.$unauth()">Log Out</button></li>
+							<li><button type="button" class="btn btn-default navbar-btn" ng-click="logout()">Log Out</button></li>
 						</ul>
 						<ul ng-if="!authData" class="nav navbar-nav navbar-right">
 							<li><a href="/signup">Sign Up</a></li>

@@ -57,7 +57,10 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
           }
       });
     };
-
+    $scope.logout = function(){
+      auth.$unauth();
+      $scope.authData = null;
+    }
     $scope.thirdPartyLogin = function(provider){
       auth.$authWithOAuthPopup(provider).then(function(authData) {
         $scope.authData = authData;
@@ -124,7 +127,7 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
 ]);
 
 app.controller("StockCtrl", ["$scope","$firebaseObject",
-  function($firebaseObject) {
+  function($scope, $firebaseObject) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     // download users's profile data into a local object
     // all server changes are applied in realtime
