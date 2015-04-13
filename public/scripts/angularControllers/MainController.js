@@ -131,6 +131,6 @@ app.controller("StockCtrl", ["$scope","$firebaseObject",
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     // download users's profile data into a local object
     // all server changes are applied in realtime
-    $scope.profile = $firebaseObject(ref.child('users').child(authData.uid));
+    $scope.profile = $firebaseObject(ref.child('users').child($scope.authData.uid));
   }
 ]);
