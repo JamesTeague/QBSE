@@ -108,7 +108,7 @@
 			    <ul class="list-group">
 					<h2>Tier 2</h2>
 			        <div ng-repeat="qb in qbs | filter: {tier: 2}">
-					    <a id={{qb.reference}} class="list-group-item" onclick="buyQB(this.id)">
+					    <a id={{qb.$id}} class="list-group-item" onclick="buyQB(this.id)">
 						    <h5 class="list-group-item-heading">{{qb.$id}} <span class="label label-default pull-right">${{qb.price}}</span></h5>
 						    <p class="list-group-item-text">
 						  		{{qb.displayInfo.yards}} yards, {{qb.displayInfo.TD}} TD, {{qb.displayInfo.INT}} INT, {{qb.displayInfo.Comp}}% 
