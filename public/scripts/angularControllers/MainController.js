@@ -141,7 +141,7 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
   function($scope, quarterbacks) {
       // we add quarterbacks array to the scope to be used in our ng-repeat
       $scope.qbs = quarterbacks;
-      console.log(qbs);
+      console.log($scope.qbs);
     }
 ]);
 
