@@ -114,7 +114,18 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
 
     $scope.buyStock = function(){
 
-    }
+    };
+
+    $scope.logUser = function(uid){
+			console.log(uid);
+			// var d = new Date();
+			// mongo.collection("userLog").insert({
+			// 	_id: d.getTime(),
+			// 	user: uid,
+			// 	time: d.toLocaleTimeString(),
+			// 	date: d.toLocaleDateString()
+			// });
+		}
 
   }
 ]);
@@ -141,7 +152,7 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
   function($scope, quarterbacks) {
       // we add quarterbacks array to the scope to be used in our ng-repeat
       $scope.qbs = quarterbacks;
-      console.log($scope.qbs);
+      //console.log($scope.qbs);
     }
 ]);
 
