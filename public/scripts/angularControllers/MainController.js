@@ -118,7 +118,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
 		};
 
 		$scope.logUser = function(uid){
-			console.log($scope.ip);
+			console.log("Log here");
 			// var d = new Date();
 			// mongo.collection("userLog").insert({
 			// 	_id: d.getTime(),
