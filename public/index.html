@@ -78,17 +78,17 @@
 				<p>The site is currently under construction. There is more to come in the coming weeks.</p>
 			</div> -->
 			<div id="stocks"></div>
-			<div id="sidebar-menu" class="col-md-1 hidden-xs hidden-sm" ng-if="authData" ng-controller="StockCtrl">
+			<div id="sidebar-menu" class="col-md-1 hidden-xs hidden-sm" ng-if="authData">
 		        <ul ng-switch="authData.provider" class="main-menu nav nav-stacked affix">
 		        	<li ng-switch-when="password" id="username">{{profile.name}}</li>
 		        	<li ng-switch-when="facebook" id="username">{{authData.facebook.displayName}}</li>
 		        	<li ng-switch-when="google" id="username">{{authData.google.displayName}}</li>
 		        	<li ng-switch-when="twitter" id="username">{{authData.twitter.displayName}}</li>
 		        	<li>
-		        		<ul ng-repeat="stock in profile.stocks">
+		        		<ul ng-repeat="(key,value) in profile.stocks">
 		        			<li>
-		        				{{stock.$id}}
-		        				<li>{{stock.amount}}, {{stock.price}}</li>
+		        				{{key}}
+		        				<li>{{value.amount}}, {{value.price}}</li>
 		        			</li>
 		        		</ul>
 		        	</li>

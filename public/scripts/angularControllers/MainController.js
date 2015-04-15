@@ -12,59 +12,73 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
         password: userpassword
       }).then(function(authData) {
         $scope.authData = authData;
-        $scope.profile = $firebaseObject(ref.child('users').child(authData.uid));
+        // download users's profile data into a local object
+        // all server changes are applied in realtime
+        var user = $firebaseObject(ref.child('users').child($scope.authData.uid));
+        user.$bindTo($scope, "profile").then(function(){
+          console.log($scope.profile)
+        });
         alertify.success("Logged in successfully!");
         if(authData.password.isTemporaryPassword){
           alertify.alert("You have logged in with temporary password and you must change it.");
           $scope.changePassword()
         }
-      }).catch(function(error) {
-          var isMobile = false;
-          if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-            isMobile = true;
-          }
-          switch (error.code){
-            case ErrorEnum.INVALID_PASSWORD:
-              if(isMobile){
-                var scrollY = window.pageYOffset;
-                alertify.error("Password is incorrect.");
-                $(".alertify-logs").css("top", scrollY+"px");
-              }
-              else{
-                alertify.error("Password is incorrect.");
-              }
-              break;
-            case ErrorEnum.INVALID_USER:
-              if(isMobile){
-                var scrollY = window.pageYOffset;
-                alertify.error(error.message);
-                $(".alertify-logs").css("top", scrollY+"px");
-              }
-              else{
-                alertify.error(error.message);
-              }
-              break;
-            case ErrorEnum.INVALID_EMAIL:
-              if(isMobile){
-                var scrollY = window.pageYOffset;
-                alertify.error("Not a valid format of email address.");
-                $(".alertify-logs").css("top", scrollY+"px");
-              }
-              else{
-                alertify.error("Not a valid format of email address.");
-              }
-              break;
-          }
-      });
+      }).catch($scope.loginError(error));
     };
+
+    $scope.loginError = function(error) {
+      var isMobile = false;
+      if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        isMobile = true;
+      }
+      switch (error.code){
+        case ErrorEnum.INVALID_PASSWORD:
+          if(isMobile){
+            var scrollY = window.pageYOffset;
+            alertify.error("Password is incorrect.");
+            $(".alertify-logs").css("top", scrollY+"px");
+          }
+          else{
+            alertify.error("Password is incorrect.");
+          }
+          break;
+        case ErrorEnum.INVALID_USER:
+          if(isMobile){
+            var scrollY = window.pageYOffset;
+            alertify.error(error.message);
+            $(".alertify-logs").css("top", scrollY+"px");
+          }
+          else{
+            alertify.error(error.message);
+          }
+          break;
+        case ErrorEnum.INVALID_EMAIL:
+          if(isMobile){
+            var scrollY = window.pageYOffset;
+            alertify.error("Not a valid format of email address.");
+            $(".alertify-logs").css("top", scrollY+"px");
+          }
+          else{
+            alertify.error("Not a valid format of email address.");
+          }
+          break;
+      }
+    };
+
     $scope.logout = function(){
       auth.$unauth();
       $scope.authData = null;
-    }
+    };
+
     $scope.thirdPartyLogin = function(provider){
       auth.$authWithOAuthPopup(provider).then(function(authData) {
         $scope.authData = authData;
-        $scope.profile = $firebaseObject(ref.child('users').child(authData.uid));
+        // download users's profile data into a local object
+        // all server changes are applied in realtime
+        var user = $firebaseObject(ref.child('users').child($scope.authData.uid));
+        user.$bindTo($scope, "profile").then(function(){
+          console.log($scope.profile)
+        });
         alertify.success("Logged in successfully!");
       }).catch(function(error) {
           switch(error.code){
@@ -84,8 +98,8 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
               alertify.alert(error.code + " " + error.message + " " + provider);
           }
         });
-    }
-
+    };
+    //needs significant work
     $scope.changePassword = function(){
       $scope.authObj.$changePassword({
         email: $scope.authData.password.email,
@@ -96,6 +110,10 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
       }).catch(function(error) {
         console.error("Error: ", error);
       });
+    };
+
+    $scope.buyStock = function(){
+
     }
 
   }
@@ -123,17 +141,18 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
   function($scope, quarterbacks) {
       // we add quarterbacks array to the scope to be used in our ng-repeat
       $scope.qbs = quarterbacks;
+      console.log(qbs);
     }
 ]);
 
-app.controller("StockCtrl", ["$scope","$firebaseObject",
-  function($scope, $firebaseObject) {
-    var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
-    // download users's profile data into a local object
-    // all server changes are applied in realtime
-    var user = $firebaseObject(ref.child('users').child($scope.authData.uid));
-    user.$bindTo($scope, "profile").then(function(){
-      console.log($scope.profile)
-    });
-  }
-]);
+// app.controller("StockCtrl", ["$scope","$firebaseObject",
+//   function($scope, $firebaseObject) {
+//     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
+//     // download users's profile data into a local object
+//     // all server changes are applied in realtime
+//     var user = $firebaseObject(ref.child('users').child($scope.authData.uid));
+//     user.$bindTo($scope, "profile").then(function(){
+//       console.log($scope.profile)
+//     });
+//   }
+// ]);
