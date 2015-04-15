@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-
+var mongo = require('mongoskin').db(process.env.MONGOLAB_URI);
 var routes = require('./routes/index');
 
 var app = express();
