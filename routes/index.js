@@ -2,7 +2,7 @@ exports.home = function(req, res){
     var ipAdress = req.ip;
 	var cwd = process.cwd();
 	var indexFile = cwd + "/public/index.html";
-	res.sendfile(indexFile, {ipa: ipAdress});
+	res.sendfile(indexFile);
 };
 exports.market = function(req, res) {
 	var cwd = process.cwd();
