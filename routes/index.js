@@ -1,5 +1,4 @@
 exports.home = function(req, res){
-    var ipAdress = req.ip;
 	var cwd = process.cwd();
 	var indexFile = cwd + "/public/index.html";
 	res.sendfile(indexFile);
