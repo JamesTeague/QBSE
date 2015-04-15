@@ -13,10 +13,10 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
       }).then(function(authData) {
         $scope.authData = authData;
         $scope.profile = $firebaseObject(ref.child('users').child(authData.uid));
-        alertify.success("Logged in as:", authData.uid);
+        alertify.success("Logged in successfully!");
         if(authData.password.isTemporaryPassword){
           alertify.alert("You have logged in with temporary password and you must change it.");
-          
+          $scope.changePassword()
         }
       }).catch(function(error) {
           var isMobile = false;
@@ -131,6 +131,9 @@ app.controller("StockCtrl", ["$scope","$firebaseObject",
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     // download users's profile data into a local object
     // all server changes are applied in realtime
-    $scope.profile = $firebaseObject(ref.child('users').child($scope.authData.uid));
+    var user = $firebaseObject(ref.child('users').child($scope.authData.uid));
+    user.$bindTo($scope, "profile").then(function(){
+      console.log($scope.profile)
+    });
   }
 ]);
