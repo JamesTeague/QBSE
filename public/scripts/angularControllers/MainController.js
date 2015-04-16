@@ -6,9 +6,9 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
     $http({
       method: 'POST',
       url: '/getData',
-      data: { identification: d.getTime().toString(),
-              time: d.toLocaleTimeString(),
-              date: d.toLocaleDateString()
+      data: { "_id": d.getTime().toString(),
+              "time": d.toLocaleTimeString(),
+              "date": d.toLocaleDateString()
             }
     })
     .success(function(data, status, headers, config){console.log(status, data)})
