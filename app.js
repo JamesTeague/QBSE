@@ -19,7 +19,10 @@ app.get('/market', routes.market)
 app.get('/admin', routes.admin)
 app.get('/myaccount', routes.myaccount)
 app.get('/signup', routes.signup)
-app.post('/getData', function(req, res){console.log("got data",req.body)});
+app.post('/getData', function(req, res){
+    console.log("got data",req.body);
+    res.sendStatus(200);
+});
 
 
 /// catch 404 and forward to error handler
