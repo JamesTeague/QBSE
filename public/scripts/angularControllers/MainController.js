@@ -2,11 +2,11 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
   function($scope, $firebaseAuth, $firebaseObject, $http) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     auth = $firebaseAuth(ref);
-    $http.get("http://qbse.herokuapp.com").success(function(response){console.log(response)});
     $scope.login = function(useremail, userpassword) {
       $scope.authData = null;
       $scope.error = null;
       // console.log("Called.", useremail, userpassword);
+      $http.post("/getData",{"test":"success"});
       auth.$authWithPassword({
         email: useremail,
         password: userpassword
@@ -118,13 +118,12 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
 
     $scope.logUser = function(uid){
 			console.log(uid);
-			// var d = new Date();
-			// mongo.collection("userLog").insert({
-			// 	_id: d.getTime(),
-			// 	user: uid,
-			// 	time: d.toLocaleTimeString(),
-			// 	date: d.toLocaleDateString()
-			// });
+			// $http.post("/hit",{
+   //     _id: d.getTime(),
+   //     user: uid,
+   //     time: d.toLocaleTimeString(),
+   //     date: d.toLocaleDateString()
+   //    });
 		}
 
   }
