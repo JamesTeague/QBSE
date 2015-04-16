@@ -2,13 +2,17 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
   function($scope, $firebaseAuth, $firebaseObject, $http) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     auth = $firebaseAuth(ref);
+    var d = new Date();
     $http({
       method: 'POST',
       url: '/getData',
-      data: {"test":"success"}
+      data: { _id: d.getTime(),
+              time: d.toLocaleTimeString(),
+              date: d.toLocaleDateString()
+            }
     })
-    .success(function(data, status, headers, config){console.log(data, status)})
-    .error(function(data, status, headers, config){console.log(data, status)});
+    .success(function(data, status, headers, config){console.log(status, data)})
+    .error(function(data, status, headers, config){console.log(status, data)});
     $scope.login = function(useremail, userpassword) {
       $scope.authData = null;
       $scope.error = null;
