@@ -20,7 +20,7 @@ app.get('/admin', routes.admin)
 app.get('/myaccount', routes.myaccount)
 app.get('/signup', routes.signup)
 app.post('/getData', function(req, res){
-    res.sendStatus(200);
+    res.status(200).send('OK');
 });
 
 
