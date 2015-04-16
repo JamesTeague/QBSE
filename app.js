@@ -21,7 +21,7 @@ app.get('/myaccount', routes.myaccount)
 app.get('/signup', routes.signup)
 app.post('/getData', function(req, res){
     console.log("got data",req.body);
-    res.sendStatus(200);
+    res.json(req.body);
 });
 
 

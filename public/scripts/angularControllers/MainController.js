@@ -7,7 +7,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
       url: '/getData',
       data: {"test":"success"}
     })
-    .success(function(){console.log("SENT DATA")})
+    .success(function(data, status, headers, config){console.log("SENT DATA", data, status, headers, config)})
     .error(function(data, status, headers, config){console.log("ERROR", data, status, headers, config)});
     $scope.login = function(useremail, userpassword) {
       $scope.authData = null;
