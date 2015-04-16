@@ -1,4 +1,4 @@
-app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
+app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http",
   function($scope, $firebaseAuth, $firebaseObject, $http) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     auth = $firebaseAuth(ref);
