@@ -4,7 +4,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
     auth = $firebaseAuth(ref);
     $http({
       method: 'POST',
-      url: 'http://qbse.herokuapp.com/getData',
+      url: '/getData',
       data: {"test":"success"}
     })
     .success(function(){console.log("SENT DATA")})
