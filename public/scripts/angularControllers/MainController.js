@@ -1,8 +1,8 @@
 app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
-  function($scope, $firebaseAuth, $firebaseObject) {
+  function($scope, $firebaseAuth, $firebaseObject, $http) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     auth = $firebaseAuth(ref);
-    console.log($scope);
+    $http.get("http://qbse.herokuapp.com").success(function(response){console.log(response)});
     $scope.login = function(useremail, userpassword) {
       $scope.authData = null;
       $scope.error = null;
