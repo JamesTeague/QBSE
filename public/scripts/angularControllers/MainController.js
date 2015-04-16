@@ -6,13 +6,12 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
     $http({
       method: 'POST',
       url: '/getData',
-      data: { "test" : "success"
-              //"_id": d.getTime().toString(),
-              // "time": d.toLocaleTimeString(),
-              // "date": d.toLocaleDateString()
+      data: { "_id": d.getTime().toString(),
+              "time": d.toLocaleTimeString(),
+              "date": d.toLocaleDateString()
             }
     })
-    .success(function(data, status, headers, config){console.log(status, data)})
+    .success(function(data, status, headers, config){console.log(data, status, config)})
     .error(function(data, status, headers, config){console.log(status, data, config)});
     $scope.login = function(useremail, userpassword) {
       $scope.authData = null;
