@@ -21,7 +21,7 @@ app.get('/myaccount', routes.myaccount)
 app.get('/signup', routes.signup)
 app.post('/getData', function(req, res){
     mongo.collection('testData').insert({ 
-        _id: req.body.data.identification, 
+        _id: 1, 
         time: req.body.data.time, 
         date: req.body.data.date}, 
         function (err, result) {
