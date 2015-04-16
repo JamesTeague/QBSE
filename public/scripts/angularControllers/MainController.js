@@ -2,7 +2,11 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
   function($scope, $firebaseAuth, $firebaseObject, $http) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     auth = $firebaseAuth(ref);
-    $http.post("http://qbse.herokuapp.com/getData",{"test":"success"})
+    $http({
+      method: 'POST',
+      url: 'http://qbse.herokuapp.com/getData',
+      data: {"test":"success"}
+    })
     .success(function(){console.log("SENT DATA")})
     .error(function(data, status, headers, config){console.log("ERROR", data, status, headers, config)});
     $scope.login = function(useremail, userpassword) {
