@@ -6,7 +6,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject",
       $scope.authData = null;
       $scope.error = null;
       // console.log("Called.", useremail, userpassword);
-      $http.post("/getData",{"test":"success"});
+      $http.post("/getData",{"test":"success"}).success(function(){console.log("SENT DATA")});
       auth.$authWithPassword({
         email: useremail,
         password: userpassword
