@@ -28,7 +28,7 @@ app.post('/getData', function(req, res){
     //         if (err) res.status(500).send(req.body);
     //         if (result) res.status(200).send('OK');
     // });
-    res.json(req);
+    res.json(req.body);
 });
 
 
