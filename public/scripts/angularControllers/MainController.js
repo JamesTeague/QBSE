@@ -12,7 +12,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
             }
     })
     .success(function(data, status, headers, config){console.log(status, data)})
-    .error(function(data, status, headers, config){console.log(status, data)});
+    .error(function(data, status, headers, config){console.log(status, data, config)});
     $scope.login = function(useremail, userpassword) {
       $scope.authData = null;
       $scope.error = null;

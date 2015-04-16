@@ -25,8 +25,8 @@ app.post('/getData', function(req, res){
         time: req.body.data.time, 
         date: req.body.data.date}, 
         function (err, result) {
-            if (err) res.status(500).send('NOT LOGGED');
-            if (result) res.status(200).send(req.body);
+            if (err) res.status(500).send(req.body);
+            if (result) res.status(200).send('OK');
     });
 });
 
