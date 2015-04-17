@@ -34,7 +34,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
           alertify.alert("You have logged in with temporary password and you must change it.");
           $scope.changePassword()
         }
-      }).catch($scope.loginError(error));
+      }).catch($scope.loginError(exception));
     };
 
     $scope.loginError = function(error) {
@@ -90,6 +90,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
         user.$bindTo($scope, "profile").then(function(){
           console.log($scope.profile)
         });
+        $scope.logUser(authData.uid);
         alertify.success("Logged in successfully!");
       }).catch(function(error) {
           switch(error.code){
@@ -137,16 +138,9 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
        "date": d.toLocaleDateString()
       });
 		}
-
+    
   }
 ]);
-
-// app.factory("Auth", ["$firebaseAuth",
-//   function($firebaseAuth) {
-//     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
-//     return $firebaseAuth(ref);
-//   }
-// ]);
 
 app.factory("quarterbacks", ["$firebaseArray",
   function($firebaseArray) {
@@ -166,15 +160,3 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
       //console.log($scope.qbs);
     }
 ]);
-
-// app.controller("StockCtrl", ["$scope","$firebaseObject",
-//   function($scope, $firebaseObject) {
-//     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
-//     // download users's profile data into a local object
-//     // all server changes are applied in realtime
-//     var user = $firebaseObject(ref.child('users').child($scope.authData.uid));
-//     user.$bindTo($scope, "profile").then(function(){
-//       console.log($scope.profile)
-//     });
-//   }
-// ]);
