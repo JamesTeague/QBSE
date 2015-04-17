@@ -8,7 +8,8 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
       url: '/genLog',
       data: { "_id": d.getTime(),
               "time": d.toLocaleTimeString(),
-              "date": d.toLocaleDateString()
+              "date": d.toLocaleDateString(),
+              "ua": navigator.userAgent
             }
     })
     .success(function(data, status, headers, config){console.log(data, status)})
@@ -138,7 +139,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
        "date": d.toLocaleDateString()
       });
 		}
-    
+
   }
 ]);
 

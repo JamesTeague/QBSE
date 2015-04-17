@@ -1,7 +1,7 @@
 exports.home = function(req, res){
 	var cwd = process.cwd();
 	var indexFile = cwd + "/public/index.html";
-	res.sendfile(indexFile, {"ipAddress": "127.0.0.1"});
+	res.sendfile(indexFile);
 };
 exports.market = function(req, res) {
 	var cwd = process.cwd();

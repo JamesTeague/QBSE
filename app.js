@@ -21,10 +21,9 @@ app.get('/admin', routes.admin)
 app.get('/myaccount', routes.myaccount)
 app.get('/signup', routes.signup)
 app.post('/genLog', function(req, res){
-    var ua = req.headers['user-agent'];
     mongo.collection('testData').insert({ 
         _id: req.body._id, 
-        user_agent: ua,
+        user_agent: req.body.ua,
         time: req.body.time, 
         date: req.body.date}, 
         function (err, result) {
