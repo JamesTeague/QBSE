@@ -5,14 +5,14 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
     var d = new Date();
     $http({
       method: 'POST',
-      url: '/getData',
+      url: '/genLog',
       data: { "_id": d.getTime(),
               "time": d.toLocaleTimeString(),
               "date": d.toLocaleDateString()
             }
     })
-    .success(function(data, status, headers, config){console.log(data, status, config)})
-    .error(function(data, status, headers, config){console.log(status, data, config)});
+    .success(function(data, status, headers, config){console.log(data, status)})
+    .error(function(data, status, headers, config){console.log(status, data)});
     $scope.login = function(useremail, userpassword) {
       $scope.authData = null;
       $scope.error = null;
@@ -128,12 +128,13 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
 
     $scope.logUser = function(uid){
 			console.log(uid);
-			// $http.post("/hit",{
-   //     _id: d.getTime(),
-   //     user: uid,
-   //     time: d.toLocaleTimeString(),
-   //     date: d.toLocaleDateString()
-   //    });
+      var d = new Date();
+			$http.post("/userLog",{
+       "_id": d.getTime(),
+       "user": uid,
+       "time": d.toLocaleTimeString(),
+       "date": d.toLocaleDateString()
+      });
 		}
 
   }

@@ -20,7 +20,7 @@ app.get('/market', routes.market)
 app.get('/admin', routes.admin)
 app.get('/myaccount', routes.myaccount)
 app.get('/signup', routes.signup)
-app.post('/getData', function(req, res){
+app.post('/genLog', function(req, res){
     mongo.collection('testData').insert({ 
         _id: req.body._id, 
         time: req.body.time, 
@@ -30,7 +30,18 @@ app.post('/getData', function(req, res){
             if (result) res.status(200).send('OK');
     });
 });
-
+app.post('/userLog', function(req, res){
+    mongo.collection('testUsers').insert({ 
+        _id : req.body._id,
+        uid : req.body.user,
+        ip  : req.ip, 
+        time: req.body.time, 
+        date: req.body.date}, 
+        function (err, result) {
+            if (err) res.status(500).send(req.body);
+            if (result) res.status(200).send('OK');
+    });
+});
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
