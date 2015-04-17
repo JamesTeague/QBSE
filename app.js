@@ -12,9 +12,8 @@ app.set('view engine', 'jade');
 app.enable('trust proxy');
 app.use(express.static(path.join(__dirname, 'public')));
 //Here we are configuring express to use body-parser as middle-ware.
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());       // to support JSON-encoded bodies
-app.use(express.json());       // to support JSON-encoded bodies
 
 app.get('/', routes.home);
 app.get('/market', routes.market)
@@ -30,7 +29,7 @@ app.post('/getData', function(req, res){
     //         if (err) res.status(500).send(req.body);
     //         if (result) res.status(200).send('OK');
     // });
-    res.json(req.body.data);
+    res.json(req.body);
 });
 
 
