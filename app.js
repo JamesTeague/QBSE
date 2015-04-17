@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());       // to support JSON-encoded bodies
-// app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.json());       // to support JSON-encoded bodies
 
 app.get('/', routes.home);
 app.get('/market', routes.market)
