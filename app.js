@@ -4,7 +4,6 @@ var bodyParser = require("body-parser");
 var mongo = require('mongoskin').db(process.env.MONGOLAB_URI);
 var routes = require('./routes/index');
 
-
 var app = express();
 
 // view engine setup
@@ -13,8 +12,7 @@ app.set('view engine', 'jade');
 app.enable('trust proxy');
 app.use(express.static(path.join(__dirname, 'public')));
 //Here we are configuring express to use body-parser as middle-ware.
-app.use(bodyParser.json());       // to support JSON-encoded bodies
-app.use(express.json());       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', routes.home);
 app.get('/market', routes.market)
