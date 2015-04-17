@@ -21,15 +21,14 @@ app.get('/admin', routes.admin)
 app.get('/myaccount', routes.myaccount)
 app.get('/signup', routes.signup)
 app.post('/getData', function(req, res){
-    // mongo.collection('testData').insert({ 
-    //     _id: 1, 
-    //     time: req.body.data.time, 
-    //     date: req.body.data.date}, 
-    //     function (err, result) {
-    //         if (err) res.status(500).send(req.body);
-    //         if (result) res.status(200).send('OK');
-    // });
-    res.json(req.body);
+    mongo.collection('testData').insert({ 
+        _id: req.body._id, 
+        time: req.body.time, 
+        date: req.body.date}, 
+        function (err, result) {
+            if (err) res.status(500).send(req.body);
+            if (result) res.status(200).send('OK');
+    });
 });
 
 

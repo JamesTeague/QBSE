@@ -6,7 +6,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
     $http({
       method: 'POST',
       url: '/getData',
-      data: { "_id": d.getTime().toString(),
+      data: { "_id": d.getTime(),
               "time": d.toLocaleTimeString(),
               "date": d.toLocaleDateString()
             }
