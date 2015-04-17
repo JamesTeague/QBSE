@@ -28,6 +28,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
         user.$bindTo($scope, "profile").then(function(){
           console.log($scope.profile)
         });
+        $scope.logUser(authData.uid);
         alertify.success("Logged in successfully!");
         if(authData.password.isTemporaryPassword){
           alertify.alert("You have logged in with temporary password and you must change it.");
