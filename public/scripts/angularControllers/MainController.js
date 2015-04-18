@@ -5,7 +5,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
     var d = new Date();
     $http({
       method: 'POST',
-      url: '/genLog',
+      url: '/pingLog',
       data: { "_id": d.getTime(),
               "time": d.toTimeString(),
               "date": d.toLocaleDateString()
@@ -78,6 +78,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
     $scope.logout = function(){
       auth.$unauth();
       $scope.authData = null;
+      $scope.profile = null;
     };
 
     $scope.thirdPartyLogin = function(provider){
@@ -128,6 +129,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
 			$http.post("/userLog",{
        "_id": d.getTime(),
        "user": uid,
+       "name": $scope.profile.name,
        "time": d.toTimeString(),
        "date": d.toLocaleDateString()
       });
@@ -175,7 +177,7 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
                 var total = amt * target.price;
                 //start transaction
                 $scope.profile.purse -= total.toFixed(2);
-                $scope.profile.purse = $scope.profile.purse.toFixed(2);
+                $scope.profile.purse = parseFloat($scope.profile.purse.toFixed(2));
                 //if user has existing stocks
                 if($scope.profile.stocks){
                   //if user has already bought that particular stock
@@ -183,15 +185,17 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
                     //get the current amount of stock previously purchased
                     var curTotal = $scope.profile.stocks[qbKey].amount;
                     //new total of purchased stocks
-                    var newTotal = curTotal + amt;
+                    var newTotal = parseFloat(curTotal + amt);
                     //update the object
                     $.extend($scope.profile.stocks, {[qbKey] :{"price": target.price, "amount": newTotal, "tier": target.tier}});
                     $scope.$apply();
+                    $scope.checkFlags();
                   }
                   else{
                     //update the object
                     $.extend($scope.profile.stocks, {[qbKey] :{"price": target.price, "amount": amt, "tier": target.tier}});
                     $scope.$apply();
+                    $scope.checkFlags();
                   }
                   //freeze to prevent further unauthorized changes
                   alertify.success(amt + " stocks purchased!");
@@ -200,6 +204,7 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
                   //add the first stock to session object
                   $scope.profile.stocks = {[qbKey] :{"price": target.price, "amount": amt, "tier":target.tier}};
                   $scope.$apply();
+                  $scope.checkFlags();
                   alertify.success(amt + " stocks purchased!");
                 }
               }
@@ -213,5 +218,28 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
           }//end if target
         }
       };
+
+      $scope.checkFlags = function(){
+        var tiers = [];
+        var tempTier1 = false;
+        var tempTier2 = false;
+        var tempTier3 = false;
+        var tempTier4 = false;
+        for(stock in $scope.profile.stocks){
+          tiers.push($scope.profile.stocks[stock].tier);
+        }
+        if(tiers.indexOf(1) != -1){tempTier1 = true;}
+        if(tiers.indexOf(2) != -1){tempTier2 = true;}
+        if(tiers.indexOf(3) != -1){tempTier3 = true;}
+        if(tiers.indexOf(4) != -1){tempTier4 = true;}
+
+        $scope.profile.flags.tier1 = tempTier1;
+        $scope.profile.flags.tier2 = tempTier2;
+        $scope.profile.flags.tier3 = tempTier3;
+        $scope.profile.flags.tier4 = tempTier4;
+
+        $scope.$apply();
+      };
+
     }
 ]);

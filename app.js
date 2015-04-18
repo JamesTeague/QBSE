@@ -21,7 +21,7 @@ app.get('/market', routes.market)
 app.get('/admin', routes.admin)
 app.get('/myaccount', routes.myaccount)
 app.get('/signup', routes.signup)
-app.post('/genLog', function(req, res){
+app.post('/pingLog', function(req, res){
     var ua = req.headers['user-agent'];
     var geo = geoip.lookup(req.ip);
     mongo.collection('testData').insert({ 
@@ -43,6 +43,7 @@ app.post('/userLog', function(req, res){
     mongo.collection('testUsers').insert({ 
         _id : req.body._id,
         uid : req.body.user,
+        name: req.body.name,
         ip  : req.ip, 
         time: req.body.time, 
         date: req.body.date,
