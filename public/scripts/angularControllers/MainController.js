@@ -123,64 +123,6 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
       });
     };
 
-    $scope.buyStock = function(qbID){
-      var target = null;
-      if($scope.authData){
-        for (qb in $scope.qbs){
-          if(qb.reference == qbID){
-            target = qb;
-            break;
-          }
-        }//end for
-        if(target){
-          var avail = Math.floor($scope.profile.purse/target.price);
-          var qbKey = qbID.replace("_"," ");
-          //prompt user for how many to buy
-          alertify.prompt("How many stocks do you want to buy in "+target.name+"?", function(e,str){
-            //if it is an integer and can afford to buy that many
-            if (e && /^\d+$/.test(str) && (str <= avail)){
-              //turn string into an integer
-              var amt = parseInt(str);
-              //calc the cost
-              var total = amt * target.price;
-              //start transaction
-              $scope.profile.purse -= total.toFixed(2);
-              $scope.profile.purse = $scope.profile.purse.toFixed(2);
-              //if user has existing stocks
-              if($scope.profile.stocks){
-                //if user has already bought that particular stock
-                if($scope.profile.stocks[qbKey]){
-                  //get the current amount of stock previously purchased
-                  var curTotal = $scope.profile.stocks[qbKey].amount;
-                  //new total of purchased stocks
-                  var newTotal = curTotal + amt;
-                  //update the object
-                  $.extend($scope.profile.stocks, {[qbKey] :{"price": qb.price, "amount": newTotal, "tier": qb.tier}});
-                }
-                else{
-                  //update the object
-                  $.extend($scope.profile.stocks, {[qbKey] :{"price": qb.price, "amount": amt, "tier": qb.tier}});
-                }
-                //freeze to prevent further unauthorized changes
-                alertify.success(amt + " stocks purchased!");
-              }
-              else{
-                //add the first stock to session object
-                $scope.profile.stocks = {[qbKey] :{"price": qb.price, "amount": amt, "tier":qb.tier}};
-                alertify.success(amt + " stocks purchased!");
-              }
-            }
-            else if (e && /^\d+$/.test(str) && (str > avail)){
-              alertify.log("Insufficient Funds!");
-            }
-            else if (e && !(/^\d+$/.test(str))){
-              alertify.error("Not a valid Number")
-            }
-          }, ""+avail);
-        }//end if target
-      }
-    };
-
     $scope.logUser = function(uid){
       var d = new Date();
 			$http.post("/userLog",{
@@ -210,5 +152,63 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
       // we add quarterbacks array to the scope to be used in our ng-repeat
       $scope.qbs = quarterbacks;
       //console.log($scope.qbs);
+      
+      $scope.buyStock = function(qbID){
+        var target = null;
+        if($scope.authData){
+          for (qb in $scope.qbs){
+            if(qb.reference == qbID){
+              target = qb;
+              break;
+            }
+          }//end for
+          if(target){
+            var avail = Math.floor($scope.profile.purse/target.price);
+            var qbKey = qbID.replace("_"," ");
+            //prompt user for how many to buy
+            alertify.prompt("How many stocks do you want to buy in "+target.name+"?", function(e,str){
+              //if it is an integer and can afford to buy that many
+              if (e && /^\d+$/.test(str) && (str <= avail)){
+                //turn string into an integer
+                var amt = parseInt(str);
+                //calc the cost
+                var total = amt * target.price;
+                //start transaction
+                $scope.profile.purse -= total.toFixed(2);
+                $scope.profile.purse = $scope.profile.purse.toFixed(2);
+                //if user has existing stocks
+                if($scope.profile.stocks){
+                  //if user has already bought that particular stock
+                  if($scope.profile.stocks[qbKey]){
+                    //get the current amount of stock previously purchased
+                    var curTotal = $scope.profile.stocks[qbKey].amount;
+                    //new total of purchased stocks
+                    var newTotal = curTotal + amt;
+                    //update the object
+                    $.extend($scope.profile.stocks, {[qbKey] :{"price": qb.price, "amount": newTotal, "tier": qb.tier}});
+                  }
+                  else{
+                    //update the object
+                    $.extend($scope.profile.stocks, {[qbKey] :{"price": qb.price, "amount": amt, "tier": qb.tier}});
+                  }
+                  //freeze to prevent further unauthorized changes
+                  alertify.success(amt + " stocks purchased!");
+                }
+                else{
+                  //add the first stock to session object
+                  $scope.profile.stocks = {[qbKey] :{"price": qb.price, "amount": amt, "tier":qb.tier}};
+                  alertify.success(amt + " stocks purchased!");
+                }
+              }
+              else if (e && /^\d+$/.test(str) && (str > avail)){
+                alertify.log("Insufficient Funds!");
+              }
+              else if (e && !(/^\d+$/.test(str))){
+                alertify.error("Not a valid Number")
+              }
+            }, ""+avail);
+          }//end if target
+        }
+      };
     }
 ]);
