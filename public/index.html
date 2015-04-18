@@ -97,7 +97,7 @@
 				<ul class="list-group">
 					<h2>Tier 1</h2>
 			        <div ng-repeat="qb in qbs | filter: {tier: 1}">
-					    <a id={{qb.reference}} class="list-group-item" ng-click="buyStock("{{qb.reference}}")">
+					    <a id={{qb.reference}} class="list-group-item" ng-click="buyStock($event)">
 						    <h5 class="list-group-item-heading">{{qb.$id}} <span class="label label-default pull-right">{{qb.price | currency}}</span></h5>
 						    <p class="list-group-item-text">
 						  		{{qb.displayInfo.yards}} yards, {{qb.displayInfo.TD}} TD, {{qb.displayInfo.INT}} INT, {{qb.displayInfo.Comp}}% 
@@ -108,7 +108,7 @@
 			    <ul class="list-group">
 					<h2>Tier 2</h2>
 			        <div ng-repeat="qb in qbs | filter: {tier: 2}">
-					    <a id={{qb.reference}} class="list-group-item" ng-click="buyStock(this.id)">
+					    <a id={{qb.reference}} class="list-group-item" ng-click="buyStock($event)">
 						    <h5 class="list-group-item-heading">{{qb.$id}} <span class="label label-default pull-right">${{qb.price}}</span></h5>
 						    <p class="list-group-item-text">
 						  		{{qb.displayInfo.yards}} yards, {{qb.displayInfo.TD}} TD, {{qb.displayInfo.INT}} INT, {{qb.displayInfo.Comp}}% 
@@ -119,7 +119,7 @@
 			    <ul class="list-group">
 					<h2>Tier 3</h2>
 			        <div ng-repeat="qb in qbs | filter: {tier: 3}">
-					    <a id={{qb.reference}} class="list-group-item" ng-click="buyStock(this.id)">
+					    <a id={{qb.reference}} class="list-group-item" ng-click="buyStock($event)">
 						    <h5 class="list-group-item-heading">{{qb.$id}} <span class="label label-default pull-right">${{qb.price}}</span></h5>
 						    <p class="list-group-item-text">
 						  		{{qb.displayInfo.yards}} yards, {{qb.displayInfo.TD}} TD, {{qb.displayInfo.INT}} INT, {{qb.displayInfo.Comp}}% 
@@ -130,7 +130,7 @@
 			    <ul class="list-group">
 					<h2>Tier 4</h2>
 			        <div ng-repeat="qb in qbs | filter: {tier: 4}">
-					    <a id={{qb.reference}} class="list-group-item" ng-click="buyStock(this.id)">
+					    <a id={{qb.reference}} class="list-group-item" ng-click="buyStock($event)">
 						    <h5 class="list-group-item-heading">{{qb.$id}} <span class="label label-default pull-right">${{qb.price}}</span></h5>
 						    <p class="list-group-item-text">
 						  		{{qb.displayInfo.yards}} yards, {{qb.displayInfo.TD}} TD, {{qb.displayInfo.INT}} INT, {{qb.displayInfo.Comp}}% 

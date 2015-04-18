@@ -153,7 +153,9 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
       $scope.qbs = quarterbacks;
       //console.log($scope.qbs);
       
-      $scope.buyStock = function(qbID){
+      $scope.buyStock = function(event){
+        console.log(event);
+        var qbID = event.target.id;
         var target = null;
         if($scope.authData){
           for (qb in $scope.qbs){
