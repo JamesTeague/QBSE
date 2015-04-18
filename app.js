@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var geoip = require('geoip-lite');
 var bodyParser = require("body-parser");
 var mongo = require('mongoskin').db(process.env.MONGOLAB_URI);
 var routes = require('./routes/index');
@@ -22,23 +23,32 @@ app.get('/myaccount', routes.myaccount)
 app.get('/signup', routes.signup)
 app.post('/genLog', function(req, res){
     var ua = req.headers['user-agent'];
+    var geo = geoip.lookup(req.ip);
     mongo.collection('testData').insert({ 
         _id: req.body._id, 
         user_agent: ua,
+        ip: req.ip,
         time: req.body.time, 
-        date: req.body.date}, 
+        date: req.body.date,
+        city: geo.city,
+        region: geo.region,
+        country: geo.country}, 
         function (err, result) {
             if (err) res.status(500).send(req.body);
             if (result) res.status(200).send('OK');
     });
 });
 app.post('/userLog', function(req, res){
+    var geo = geoip.lookup(req.ip);
     mongo.collection('testUsers').insert({ 
         _id : req.body._id,
         uid : req.body.user,
         ip  : req.ip, 
         time: req.body.time, 
-        date: req.body.date}, 
+        date: req.body.date,
+        city: geo.city,
+        region: geo.region,
+        country: geo.country}, 
         function (err, result) {
             if (err) res.status(500).send(req.body);
             if (result) res.status(200).send('OK');
