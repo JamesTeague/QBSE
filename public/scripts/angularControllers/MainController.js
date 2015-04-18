@@ -209,6 +209,7 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
             }, ""+avail);
           }//end if target
         }
+        $scope.$apply();
       };
     }
 ]);
