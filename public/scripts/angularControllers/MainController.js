@@ -166,7 +166,7 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
             var avail = Math.floor($scope.profile.purse/target.price);
             var qbKey = qbID.replace("_"," ");
             //prompt user for how many to buy
-            alertify.prompt("How many stocks do you want to buy in "+target.name+"?", function(e,str){
+            alertify.prompt("How many stocks do you want to buy in "+qbKey+"?", function(e,str){
               //if it is an integer and can afford to buy that many
               if (e && /^\d+$/.test(str) && (str <= avail)){
                 //turn string into an integer
@@ -185,18 +185,18 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
                     //new total of purchased stocks
                     var newTotal = curTotal + amt;
                     //update the object
-                    $.extend($scope.profile.stocks, {[qbKey] :{"price": qb.price, "amount": newTotal, "tier": qb.tier}});
+                    $.extend($scope.profile.stocks, {[qbKey] :{"price": target.price, "amount": newTotal, "tier": target.tier}});
                   }
                   else{
                     //update the object
-                    $.extend($scope.profile.stocks, {[qbKey] :{"price": qb.price, "amount": amt, "tier": qb.tier}});
+                    $.extend($scope.profile.stocks, {[qbKey] :{"price": target.price, "amount": amt, "tier": target.tier}});
                   }
                   //freeze to prevent further unauthorized changes
                   alertify.success(amt + " stocks purchased!");
                 }
                 else{
                   //add the first stock to session object
-                  $scope.profile.stocks = {[qbKey] :{"price": qb.price, "amount": amt, "tier":qb.tier}};
+                  $scope.profile.stocks = {[qbKey] :{"price": target.price, "amount": amt, "tier":target.tier}};
                   alertify.success(amt + " stocks purchased!");
                 }
               }
