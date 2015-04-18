@@ -7,7 +7,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
       method: 'POST',
       url: '/genLog',
       data: { "_id": d.getTime(),
-              "time": d.toLocaleTimeString(),
+              "time": d.toTimeString(),
               "date": d.toLocaleDateString()
             }
     })
@@ -128,7 +128,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
 			$http.post("/userLog",{
        "_id": d.getTime(),
        "user": uid,
-       "time": d.toLocaleTimeString(),
+       "time": d.toTimeString(),
        "date": d.toLocaleDateString()
       });
 		}
