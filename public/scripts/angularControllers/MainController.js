@@ -157,8 +157,8 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
         var target = null;
         if($scope.authData){
           for (qb in $scope.qbs){
-            if(qb.reference == qbID){
-              target = qb;
+            if($scope.qbs[qb].reference == qbID){
+              target = $scope.qbs[qb];
               break;
             }
           }//end for
