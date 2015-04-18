@@ -186,10 +186,12 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
                     var newTotal = curTotal + amt;
                     //update the object
                     $.extend($scope.profile.stocks, {[qbKey] :{"price": target.price, "amount": newTotal, "tier": target.tier}});
+                    $scope.$apply();
                   }
                   else{
                     //update the object
                     $.extend($scope.profile.stocks, {[qbKey] :{"price": target.price, "amount": amt, "tier": target.tier}});
+                    $scope.$apply();
                   }
                   //freeze to prevent further unauthorized changes
                   alertify.success(amt + " stocks purchased!");
@@ -197,6 +199,7 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
                 else{
                   //add the first stock to session object
                   $scope.profile.stocks = {[qbKey] :{"price": target.price, "amount": amt, "tier":target.tier}};
+                  $scope.$apply();
                   alertify.success(amt + " stocks purchased!");
                 }
               }
@@ -209,7 +212,6 @@ app.controller("QBCtrl", ["$scope", "quarterbacks",
             }, ""+avail);
           }//end if target
         }
-        $scope.$apply();
       };
     }
 ]);
