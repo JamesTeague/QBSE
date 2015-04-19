@@ -1,7 +1,8 @@
 exports.home = function(req, res){
-	var cwd = process.cwd();
-	var indexFile = cwd + "/public/index.html";
-	res.sendfile(indexFile);
+	// var cwd = process.cwd();
+	// var indexFile = cwd + "/public/index.html";
+	// res.sendfile(indexFile);
+    res.render('index', {"title": "QBSE"});
 };
 exports.market = function(req, res) {
 	var cwd = process.cwd();

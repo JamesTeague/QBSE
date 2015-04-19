@@ -1,5 +1,48 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+	.container(ng-controller="QBCtrl")
+		#sidebar-menu.col-md-1.hidden-xs.hidden-sm(ng-if="authData")
+			ul.main-menu.nav.nav-stacked.affix
+				li#username: {{profile.name}}
+				li
+					ul(ng-repeat="(key,value) in profile.stocks")
+						li
+							{{key}}
+							li {{value.amount}}, {{value.price}}
+		ul.list-group
+			h2 Tier 1
+			div(ng-repeat="qb in qbs | filter: {tier: 1}")
+				a.list-group-item(id="{{qb.reference}}", ng-click="buyStock(qb.reference)")
+					h5.list-group-item-heading {{qb.$id}}
+						span.label.label-default.pull-right
+							{{qb.price | currency}}
+					p.list-group-item-text
+						{{qb.displayInfo.yards}} yards, {{qb.displayInfo.TD}} TD, {{qb.displayInfo.INT}} INT, {{qb.displayInfo.Comp}}%
+		ul.list-group
+			h2 Tier 2
+			div(ng-repeat="qb in qbs | filter: {tier: 2}")
+				a.list-group-item(id="{{qb.reference}}", ng-click="buyStock(qb.reference)")
+					h5.list-group-item-heading {{qb.$id}}
+						span.label.label-default.pull-right
+							{{qb.price | currency}}
+					p.list-group-item-text
+						{{qb.displayInfo.yards}} yards, {{qb.displayInfo.TD}} TD, {{qb.displayInfo.INT}} INT, {{qb.displayInfo.Comp}}%
+		ul.list-group
+			h2 Tier 3
+			div(ng-repeat="qb in qbs | filter: {tier: 3}")
+				a.list-group-item(id="{{qb.reference}}", ng-click="buyStock(qb.reference)")
+					h5.list-group-item-heading {{qb.$id}}
+						span.label.label-default.pull-right
+							{{qb.price | currency}}
+					p.list-group-item-text
+						{{qb.displayInfo.yards}} yards, {{qb.displayInfo.TD}} TD, {{qb.displayInfo.INT}} INT, {{qb.displayInfo.Comp}}%
+		ul.list-group
+			h2 Tier 4
+			div(ng-repeat="qb in qbs | filter: {tier: 4}")
+				a.list-group-item(id="{{qb.reference}}", ng-click="buyStock(qb.reference)")
+					h5.list-group-item-heading {{qb.$id}}
+						span.label.label-default.pull-right
+							{{qb.price | currency}}
+					p.list-group-item-text
+						{{qb.displayInfo.yards}} yards, {{qb.displayInfo.TD}} TD, {{qb.displayInfo.INT}} INT, {{qb.displayInfo.Comp}}%

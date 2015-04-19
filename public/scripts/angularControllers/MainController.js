@@ -1,7 +1,11 @@
 app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http",
-  function($scope, $firebaseAuth, $firebaseObject, $http, purchaseService) {
+  function($scope, $firebaseAuth, $firebaseObject, $http) {
     var ref = new Firebase("https://qb-stock-exchange.firebaseio.com/");
     auth = $firebaseAuth(ref);
+    if(auth.$getAuth()){
+      $scope.authData = auth.$getAuth();
+      $scope.bindUser();
+    }
     var d = new Date();
     $http({
       method: 'POST',
@@ -21,19 +25,14 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
         password: userpassword
       }).then(function(authData) {
         $scope.authData = authData;
-        // download users's profile data into a local object
-        // all server changes are applied in realtime
-        var user = $firebaseObject(ref.child('users').child($scope.authData.uid));
-        user.$bindTo($scope, "profile").then(function(){
-          console.log($scope.profile)
-        });
+        $scope.bindUser();
         $scope.logUser(authData.uid);
         alertify.success("Logged in successfully!");
         if(authData.password.isTemporaryPassword){
           alertify.alert("You have logged in with temporary password and you must change it.");
           $scope.changePassword()
         }
-      }).catch($scope.loginError(exception));
+      }).catch(console.log(exception));
     };
 
     $scope.loginError = function(error) {
@@ -84,12 +83,7 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
     $scope.thirdPartyLogin = function(provider){
       auth.$authWithOAuthPopup(provider).then(function(authData) {
         $scope.authData = authData;
-        // download users's profile data into a local object
-        // all server changes are applied in realtime
-        var user = $firebaseObject(ref.child('users').child($scope.authData.uid));
-        user.$bindTo($scope, "profile").then(function(){
-          console.log($scope.profile)
-        });
+        $scope.bindUser();
         $scope.logUser(authData.uid);
         alertify.success("Logged in successfully!");
       }).catch(function(error) {
@@ -129,11 +123,20 @@ app.controller("MainCtrl", ["$scope", "$firebaseAuth", "$firebaseObject", "$http
 			$http.post("/userLog",{
        "_id": d.getTime(),
        "user": uid,
-       "name": $scope.profile.name,
+       // "name": $scope.profile.name,
        "time": d.toTimeString(),
        "date": d.toLocaleDateString()
       });
-		}
+		};
+
+    $scope.bindUser = function(){
+      // download users's profile data into a local object
+      // all server changes are applied in realtime
+      var user = $firebaseObject(ref.child('users').child($scope.authData.uid));
+      user.$bindTo($scope, "profile").then(function(){
+        console.log($scope.profile)
+      });
+    };
 
   }
 ]);
