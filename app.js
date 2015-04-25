@@ -12,9 +12,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.enable('trust proxy');
 app.use(express.static(path.join(__dirname, 'public')));
-//Here we are configuring express to use body-parser as middle-ware.
+// Here, we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());       // to support JSON-encoded bodies
+app.use(bodyParser.json()); // to support JSON-encoded bodies
 
 app.get('/', routes.home);
 app.get('/market', routes.market)
@@ -23,6 +23,7 @@ app.get('/myaccount', routes.myaccount)
 app.get('/signup', routes.signup)
 app.post('/pingLog', function(req, res){
     var ua = req.headers['user-agent'];
+    console.log(app.get('env'));
     var geo = geoip.lookup(req.ip);
     mongo.collection('testData').insert({ 
         _id: req.body._id, 
